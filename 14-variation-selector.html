@@ -1,27 +1,311 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>14 规格选择：颜色、长度和数量</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page">
-<section class="hero"><div class="hero-card"><h1>14 规格选择：颜色、长度和数量</h1><p>可变产品的前台选择结构。</p></div><img src="assets/page-14.svg" alt="14 规格选择：颜色、长度和数量"></section>
-<nav class="nav"><a href="index.html">首页</a>
-<a href="01-page-structure.html">01 页面结构</a>
-<a href="02-header-navigation.html">02 头部导航</a>
-<a href="03-hero-banner.html">03 首页 Banner</a>
-<a href="04-product-card.html">04 产品卡片</a>
-<a href="05-product-grid.html">05 产品列表</a>
-<a href="06-responsive-grid.html">06 响应式列表</a>
-<a href="07-category-sidebar.html">07 分类侧栏</a>
-<a href="08-toolbar-filter.html">08 搜索筛选</a>
-<a href="09-card-details.html">09 卡片细节</a>
-<a href="10-list-view.html">10 列表视图</a>
-<a href="11-pagination.html">11 分页</a>
-<a href="12-product-detail.html">12 产品详情</a>
-<a href="13-product-gallery.html">13 产品图集</a>
-<a href="14-variation-selector.html">14 规格选择</a>
-<a href="15-product-tabs.html">15 详情 Tab</a>
-<a href="16-related-products.html">16 相关产品</a>
-<a href="17-cart-page.html">17 购物车</a>
-<a href="18-checkout-page.html">18 结账页</a>
-<a href="19-account-orders.html">19 账户订单</a>
-<a href="20-complete-store-page.html">20 完整页面</a></nav>
-<section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>规格</span><span>颜色</span><span>尺寸</span><span>数量</span></div></section>
-<section class="demo"><h2>规格选择示例</h2><div class="detail"><img src="assets/product-01.svg"><div class="summary-side"><h2>Composite Decking Board</h2><p><span class="price">$39.00 - $59.00</span></p><div class="options" data-options><strong>Color</strong><div class="option-buttons"><button class="active">Teak</button><button>Walnut</button><button>Grey</button></div></div><div class="options" data-options><strong>Length</strong><div class="option-buttons"><button class="active">2.2m</button><button>3.6m</button><button>5.4m</button></div></div><div class="qty"><label>Qty</label><input type="number" value="1"></div><a class="button">Add to Cart</a></div></div></section>
-<section class="summary"><h2>本页总结</h2><p>规格选择本质是用户选择属性后再加入购物车。</p></section>
-</main><script src="js/main.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>14 规格选择：品牌产品详情页打磨版</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>14 规格选择：品牌产品详情页打磨版</h1>
+        <p>把规格选项页面重点优化成更干净、更高级、更适合后期动态化的品牌官网产品详情界面。</p>
+      </div>
+      <img src="assets/page-14.svg" alt="14 规格选择：品牌产品详情页打磨版">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页学习重点</h2>
+      <div class="tag-list"><span>品牌产品详情</span><span>变体联动</span><span>颜色选项</span><span>产品图切换</span><span>WooCommerce 动态化</span></div>
+    </section>
+
+    
+<section class="card">
+  <h2>这次重点优化了什么</h2>
+  <ul class="checklist">
+    <li>整体改成更干净的品牌产品详情页布局，减少厚重紫色块的压迫感</li>
+    <li>左侧产品图区域增加浮动标签、缩略图、当前变体和价格展示</li>
+    <li>右侧信息区重新梳理层级：面包屑、标题、评分、价格、卖点、颜色、长度、数量、按钮</li>
+    <li>变体切换时，主图、标题、当前颜色、价格、SKU、描述全部同步变化</li>
+    <li>结构保留 data-*，后期更容易替换为 WooCommerce variation data</li>
+  </ul>
+</section>
+
+<section class="demo">
+  <h2>品牌风格产品详情界面</h2>
+
+  <div class="brand-product-page">
+    <div class="brand-product-shell">
+      <div class="brand-gallery-card">
+        <div class="brand-gallery-main">
+          <span class="brand-gallery-badge">Best Seller</span>
+
+          <img
+            class="brand-variation-image"
+            data-variation-image
+            src="assets/product-01.svg"
+            alt="Teak Decking"
+          >
+
+          <div class="brand-gallery-floating">
+            <strong>Color preview</strong>
+            <span data-variation-name>Teak Decking</span>
+          </div>
+        </div>
+
+        <div class="brand-thumb-strip">
+          <button
+            class="brand-thumb active"
+            type="button"
+            data-variation-thumb
+            data-image="assets/product-01.svg"
+            data-name="Teak Decking"
+            data-price="$39.00"
+            data-sku="DECK-TEAK-220"
+            data-description="Warm natural wood tone for residential decking, poolside areas, and relaxed outdoor living spaces."
+          >
+            <img src="assets/product-01.svg" alt="Teak Decking">
+          </button>
+
+          <button
+            class="brand-thumb"
+            type="button"
+            data-variation-thumb
+            data-image="assets/product-02.svg"
+            data-name="Walnut Decking"
+            data-price="$42.00"
+            data-sku="DECK-WALNUT-220"
+            data-description="Darker premium tone for modern commercial outdoor spaces, feature decks, and high-end landscape projects."
+          >
+            <img src="assets/product-02.svg" alt="Walnut Decking">
+          </button>
+
+          <button
+            class="brand-thumb"
+            type="button"
+            data-variation-thumb
+            data-image="assets/product-03.svg"
+            data-name="Grey Decking"
+            data-price="$45.00"
+            data-sku="DECK-GREY-220"
+            data-description="Modern neutral color for minimalist garden decks, balconies, and contemporary exterior designs."
+          >
+            <img src="assets/product-03.svg" alt="Grey Decking">
+          </button>
+        </div>
+
+        <div class="brand-gallery-caption">
+          <div>
+            <strong data-variation-name>Teak Decking</strong>
+            <span>Selected variation image</span>
+          </div>
+          <span class="price" data-variation-price>$39.00</span>
+        </div>
+      </div>
+
+      <div class="brand-info-card">
+        <div class="brand-breadcrumb">
+          <a href="#">Home</a>
+          <span>/</span>
+          <a href="#">Decking</a>
+          <span>/</span>
+          <a href="#">Composite Decking</a>
+        </div>
+
+        <h2 data-variation-title>Teak Decking</h2>
+        <p class="brand-subtitle">Premium WPC decking board for outdoor residential and commercial projects.</p>
+
+        <div class="brand-review-row">
+          <div class="rating">★★★★★</div>
+          <a href="#">24 reviews</a>
+          <span class="note">SKU: <strong data-variation-sku>DECK-TEAK-220</strong></span>
+        </div>
+
+        <div class="brand-price-row">
+          <span class="old">$59.00</span>
+          <span class="price" data-variation-price>$39.00</span>
+        </div>
+
+        <p class="note" data-variation-description>
+          Warm natural wood tone for residential decking, poolside areas, and relaxed outdoor living spaces.
+        </p>
+
+        <div class="brand-benefits">
+          <div class="brand-benefit">
+            <strong>Low maintenance</strong>
+            <span>No painting or staining required</span>
+          </div>
+
+          <div class="brand-benefit">
+            <strong>Weather resistant</strong>
+            <span>Designed for outdoor use</span>
+          </div>
+
+          <div class="brand-benefit">
+            <strong>Sample available</strong>
+            <span>Good for color checking</span>
+          </div>
+        </div>
+
+        <div class="brand-divider"></div>
+
+        <div class="brand-section-title">
+          <strong>Choose color</strong>
+          <span>Selected: <strong data-variation-name>Teak Decking</strong></span>
+        </div>
+
+        <div class="brand-variant-list">
+          <button
+            class="brand-variant-option active"
+            type="button"
+            data-variation-option
+            data-image="assets/product-01.svg"
+            data-name="Teak Decking"
+            data-price="$39.00"
+            data-sku="DECK-TEAK-220"
+            data-description="Warm natural wood tone for residential decking, poolside areas, and relaxed outdoor living spaces."
+          >
+            <span class="brand-swatch swatch-teak"></span>
+            <span class="brand-variant-name">
+              <strong>Teak</strong>
+              <small>Warm natural wood tone</small>
+            </span>
+            <em class="brand-stock-pill">In stock</em>
+          </button>
+
+          <button
+            class="brand-variant-option"
+            type="button"
+            data-variation-option
+            data-image="assets/product-02.svg"
+            data-name="Walnut Decking"
+            data-price="$42.00"
+            data-sku="DECK-WALNUT-220"
+            data-description="Darker premium tone for modern commercial outdoor spaces, feature decks, and high-end landscape projects."
+          >
+            <span class="brand-swatch swatch-walnut"></span>
+            <span class="brand-variant-name">
+              <strong>Walnut</strong>
+              <small>Darker premium tone</small>
+            </span>
+            <em class="brand-stock-pill">In stock</em>
+          </button>
+
+          <button
+            class="brand-variant-option"
+            type="button"
+            data-variation-option
+            data-image="assets/product-03.svg"
+            data-name="Grey Decking"
+            data-price="$45.00"
+            data-sku="DECK-GREY-220"
+            data-description="Modern neutral color for minimalist garden decks, balconies, and contemporary exterior designs."
+          >
+            <span class="brand-swatch swatch-grey"></span>
+            <span class="brand-variant-name">
+              <strong>Grey</strong>
+              <small>Modern neutral color</small>
+            </span>
+            <em class="brand-stock-pill">Low stock</em>
+          </button>
+        </div>
+
+        <div class="brand-divider"></div>
+
+        <div class="brand-section-title">
+          <strong>Choose length</strong>
+          <span>Standard stock lengths</span>
+        </div>
+
+        <div class="brand-length-row" data-options>
+          <button class="active" type="button">2.2m</button>
+          <button type="button">3.6m</button>
+          <button type="button">5.4m</button>
+        </div>
+
+        <div class="brand-qty-cart-row">
+          <div class="brand-qty">
+            <label for="brand-product-qty">Qty</label>
+            <input id="brand-product-qty" type="number" value="1" min="1">
+          </div>
+
+          <a class="button button-wide" href="17-cart-page.html">Add to Cart</a>
+        </div>
+
+        <div class="brand-actions">
+          <a class="button outline button-wide" href="#">Request Sample</a>
+          <a class="button outline button-wide" href="#">Download Specs</a>
+        </div>
+
+        <div class="brand-trust-note">
+          <div>
+            This layout is ready to be connected with WooCommerce variation data later.
+          </div>
+        </div>
+
+        <div class="brand-meta-compact">
+          <div class="brand-meta-item">
+            <strong>Material</strong>
+            <span>WPC Co-extrusion</span>
+          </div>
+
+          <div class="brand-meta-item">
+            <strong>Surface</strong>
+            <span>Wood grain</span>
+          </div>
+
+          <div class="brand-meta-item">
+            <strong>Use</strong>
+            <span>Outdoor decking</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="code">&lt;button
+  data-variation-option
+  data-image="assets/product-02.svg"
+  data-name="Walnut Decking"
+  data-price="$42.00"
+  data-sku="DECK-WALNUT-220"
+  data-description="Darker premium tone..."&gt;
+  Walnut
+&lt;/button&gt;</div>
+</section>
+
+
+    <section class="summary">
+      <h2>本页总结</h2>
+      <p>这一版把规格选择页从练习页面提升为更接近品牌商城详情页的静态原型。后期可以把 data-* 替换为 WooCommerce variation data，逐步接入真实产品数据。</p>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+</body>
+</html>

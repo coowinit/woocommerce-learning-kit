@@ -1,27 +1,141 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>19 账户订单页面：我的账户和订单列表</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page">
-<section class="hero"><div class="hero-card"><h1>19 账户订单页面：我的账户和订单列表</h1><p>客户购买后的管理中心。</p></div><img src="assets/page-19.svg" alt="19 账户订单页面：我的账户和订单列表"></section>
-<nav class="nav"><a href="index.html">首页</a>
-<a href="01-page-structure.html">01 页面结构</a>
-<a href="02-header-navigation.html">02 头部导航</a>
-<a href="03-hero-banner.html">03 首页 Banner</a>
-<a href="04-product-card.html">04 产品卡片</a>
-<a href="05-product-grid.html">05 产品列表</a>
-<a href="06-responsive-grid.html">06 响应式列表</a>
-<a href="07-category-sidebar.html">07 分类侧栏</a>
-<a href="08-toolbar-filter.html">08 搜索筛选</a>
-<a href="09-card-details.html">09 卡片细节</a>
-<a href="10-list-view.html">10 列表视图</a>
-<a href="11-pagination.html">11 分页</a>
-<a href="12-product-detail.html">12 产品详情</a>
-<a href="13-product-gallery.html">13 产品图集</a>
-<a href="14-variation-selector.html">14 规格选择</a>
-<a href="15-product-tabs.html">15 详情 Tab</a>
-<a href="16-related-products.html">16 相关产品</a>
-<a href="17-cart-page.html">17 购物车</a>
-<a href="18-checkout-page.html">18 结账页</a>
-<a href="19-account-orders.html">19 账户订单</a>
-<a href="20-complete-store-page.html">20 完整页面</a></nav>
-<section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>我的账户</span><span>订单</span><span>地址</span></div></section>
-<section class="demo"><h2>我的账户页面</h2><div class="account-grid"><nav class="account-menu"><a class="active">Dashboard</a><a>Orders</a><a>Downloads</a><a>Addresses</a><a>Account details</a><a>Logout</a></nav><div class="box"><h3>Recent Orders</h3><table class="cart-table"><thead><tr><th>Order</th><th>Date</th><th>Status</th><th>Total</th></tr></thead><tbody><tr><td>#1001</td><td>2026-05-12</td><td>Processing</td><td>$117.00</td></tr><tr><td>#1000</td><td>2026-05-08</td><td>Completed</td><td>$86.00</td></tr></tbody></table></div></div></section>
-<section class="summary"><h2>本页总结</h2><p>账户页重点是菜单清楚、订单信息易读。</p></section>
-</main><script src="js/main.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>19 账户订单页面：打磨后的账户中心</title>
+  
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>19 账户订单页面：打磨后的账户中心</h1>
+        <p>优化账户中心视觉层级，增加订单统计、状态标签和操作入口。</p>
+      </div>
+      <img src="assets/page-19.svg" alt="19 账户订单页面：打磨后的账户中心">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页学习重点</h2>
+      <div class="tag-list"><span>My Account</span><span>订单列表</span><span>状态标签</span><span>账户菜单</span><span>动态化准备</span></div>
+    </section>
+
+    
+<section class="card">
+  <h2>本次顺手优化点</h2>
+  <ul class="checklist">
+    <li>账户菜单改成更紧凑的卡片式导航</li>
+    <li>右侧增加订单统计卡片，减少空白感</li>
+    <li>订单状态用 badge 展示，更接近真实 WooCommerce 账户中心</li>
+    <li>保留后期动态化思路：订单数据可由 WooCommerce My Account 模板输出</li>
+  </ul>
+</section>
+
+<section class="demo">
+  <h2>我的账户页面：打磨版</h2>
+
+  <div class="account-dashboard-polished">
+    <nav class="account-menu polished">
+      <a class="active" href="#">Dashboard <span>Overview</span></a>
+      <a href="#">Orders <span>2</span></a>
+      <a href="#">Downloads <span>0</span></a>
+      <a href="#">Addresses <span>Edit</span></a>
+      <a href="#">Account details <span>Profile</span></a>
+      <a href="#">Logout <span>Exit</span></a>
+    </nav>
+
+    <div class="account-content-card">
+      <div class="account-overview-grid">
+        <div class="account-stat">
+          <span class="note">Total orders</span>
+          <strong>2</strong>
+        </div>
+
+        <div class="account-stat">
+          <span class="note">Processing</span>
+          <strong>1</strong>
+        </div>
+
+        <div class="account-stat">
+          <span class="note">Completed</span>
+          <strong>1</strong>
+        </div>
+      </div>
+
+      <h3>Recent Orders</h3>
+
+      <div class="table-scroll">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Order</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>#1001</td>
+              <td>2026-05-12</td>
+              <td><span class="status-badge">Processing</span></td>
+              <td>$117.00</td>
+              <td><a class="order-action-link" href="#">View</a></td>
+            </tr>
+
+            <tr>
+              <td>#1000</td>
+              <td>2026-05-08</td>
+              <td><span class="status-badge completed">Completed</span></td>
+              <td>$86.00</td>
+              <td><a class="order-action-link" href="#">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="dynamic-note">
+        后期动态化思路：左侧菜单对应 WooCommerce My Account endpoints，订单表格由 customer orders 循环输出。
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <section class="summary">
+      <h2>本页总结</h2>
+      <p>账户页面不只是订单表格，也需要清晰的导航和状态反馈。现在这版更适合作为 WooCommerce My Account 模板的静态参考。</p>
+    </section>
+  </main>
+  
+  <script src="js/main.js"></script>
+</body>
+</html>

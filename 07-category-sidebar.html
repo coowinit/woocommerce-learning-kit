@@ -1,50 +1,248 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>07 分类侧栏：左侧筛选 + 右侧产品列表</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page">
-<section class="hero"><div class="hero-card"><h1>07 分类侧栏：左侧筛选 + 右侧产品列表</h1><p>常见商店页布局：左侧筛选，右侧产品。</p></div><img src="assets/page-07.svg" alt="07 分类侧栏：左侧筛选 + 右侧产品列表"></section>
-<nav class="nav"><a href="index.html">首页</a>
-<a href="01-page-structure.html">01 页面结构</a>
-<a href="02-header-navigation.html">02 头部导航</a>
-<a href="03-hero-banner.html">03 首页 Banner</a>
-<a href="04-product-card.html">04 产品卡片</a>
-<a href="05-product-grid.html">05 产品列表</a>
-<a href="06-responsive-grid.html">06 响应式列表</a>
-<a href="07-category-sidebar.html">07 分类侧栏</a>
-<a href="08-toolbar-filter.html">08 搜索筛选</a>
-<a href="09-card-details.html">09 卡片细节</a>
-<a href="10-list-view.html">10 列表视图</a>
-<a href="11-pagination.html">11 分页</a>
-<a href="12-product-detail.html">12 产品详情</a>
-<a href="13-product-gallery.html">13 产品图集</a>
-<a href="14-variation-selector.html">14 规格选择</a>
-<a href="15-product-tabs.html">15 详情 Tab</a>
-<a href="16-related-products.html">16 相关产品</a>
-<a href="17-cart-page.html">17 购物车</a>
-<a href="18-checkout-page.html">18 结账页</a>
-<a href="19-account-orders.html">19 账户订单</a>
-<a href="20-complete-store-page.html">20 完整页面</a></nav>
-<section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>分类</span><span>筛选</span><span>侧栏</span></div></section>
-<section class="demo"><h2>分类侧栏布局</h2><div class="layout"><aside class="sidebar"><h3>Categories</h3><div class="filters"><label><input type="checkbox"> Decking</label><label><input type="checkbox"> Cladding</label><label><input type="checkbox"> Fencing</label><label><input type="checkbox"> Accessories</label></div><h3>Price</h3><div class="filters"><label><input type="checkbox"> $0 - $50</label><label><input type="checkbox"> $50 - $100</label></div></aside><div class="grid"><article class="product-card" data-card data-name="Product 01" data-category="Decking">
-<span class="badge">New</span>
-<img src="assets/product-01.svg" alt="Product 01">
-<div class="product-card-content"><h3>Product 01</h3><div class="rating">★★★★★</div><p>Decking product for outdoor projects.</p><p><span class="price">$34.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>07 分类侧栏：优化后的筛选布局</title>
+  
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>07 分类侧栏：优化后的筛选布局</h1>
+        <p>分类侧边栏改成更接近真实 WooCommerce 商店的筛选体验，桌面端稳定，手机端友好。</p>
+      </div>
+      <img src="assets/page-07.svg" alt="07 分类侧栏：优化后的筛选布局">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页学习重点</h2>
+      <div class="tag-list"><span>分类筛选</span><span>侧边栏</span><span>移动端兼容</span><span>WooCommerce 动态化准备</span></div>
+    </section>
+
+    
+<section class="card">
+  <h2>这次优化了什么</h2>
+  <ul class="checklist">
+    <li>筛选项改成整行可点击，减少左侧松散和错位感</li>
+    <li>加入数量、已选筛选标签和 Reset 按钮，更接近真实商城体验</li>
+    <li>桌面端侧栏 sticky，手机端自动变成顶部筛选卡片</li>
+    <li>结构更容易替换成 WooCommerce 分类、属性和价格筛选</li>
+  </ul>
+</section>
+
+<section class="demo">
+  <h2>优化后的分类侧边栏布局</h2>
+
+  <div class="filter-layout-optimized">
+    <aside class="filter-panel">
+      <div class="filter-panel__header">
+        <h3>Filters</h3>
+        <button class="filter-reset" type="button">Reset</button>
+      </div>
+
+      <div class="filter-chips">
+        <span class="filter-chip">Decking</span>
+        <span class="filter-chip">$0 - $50</span>
+      </div>
+
+      <div class="filter-group">
+        <h4>Categories</h4>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>Decking</span>
+          <em class="filter-count">12</em>
+        </label>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>Cladding</span>
+          <em class="filter-count">8</em>
+        </label>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>Fencing</span>
+          <em class="filter-count">6</em>
+        </label>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>Accessories</span>
+          <em class="filter-count">15</em>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Price</h4>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>$0 - $50</span>
+          <em class="filter-count">9</em>
+        </label>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>$50 - $100</span>
+          <em class="filter-count">14</em>
+        </label>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>$100+</span>
+          <em class="filter-count">5</em>
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <h4>Material</h4>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>WPC</span>
+          <em class="filter-count">18</em>
+        </label>
+
+        <label class="filter-option">
+          <input type="checkbox">
+          <span>Co-extrusion</span>
+          <em class="filter-count">10</em>
+        </label>
+      </div>
+    </aside>
+
+    <div class="products-area">
+      <div class="toolbar">
+        <div>Showing 1–6 of 28 products</div>
+        <input data-product-search type="search" placeholder="Search products...">
+        <select>
+          <option>Sort by latest</option>
+          <option>Sort by price</option>
+        </select>
+      </div>
+
+      <div class="grid">
+        <article class="product-card" data-card data-name="Product 01" data-category="Decking">
+      <span class="badge">New</span>
+      <img src="assets/product-01.svg" alt="Product 01">
+      <div class="product-card-content">
+        <h3>Product 01</h3>
+        <div class="rating">★★★★★</div>
+        <p>Decking product for outdoor projects.</p>
+        <p><span class="price">$34.00</span></p>
+        <a class="button" href="12-product-detail.html">View Product</a>
+      </div>
+    </article>
 <article class="product-card" data-card data-name="Product 02" data-category="Decking">
-
-<img src="assets/product-02.svg" alt="Product 02">
-<div class="product-card-content"><h3>Product 02</h3><div class="rating">★★★★★</div><p>Decking product for outdoor projects.</p><p><span class="price">$39.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+      
+      <img src="assets/product-02.svg" alt="Product 02">
+      <div class="product-card-content">
+        <h3>Product 02</h3>
+        <div class="rating">★★★★★</div>
+        <p>Decking product for outdoor projects.</p>
+        <p><span class="price">$39.00</span></p>
+        <a class="button" href="12-product-detail.html">View Product</a>
+      </div>
+    </article>
 <article class="product-card" data-card data-name="Product 03" data-category="Cladding">
-
-<img src="assets/product-03.svg" alt="Product 03">
-<div class="product-card-content"><h3>Product 03</h3><div class="rating">★★★★★</div><p>Cladding product for outdoor projects.</p><p><span class="price">$44.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+      <span class="badge">Hot</span>
+      <img src="assets/product-03.svg" alt="Product 03">
+      <div class="product-card-content">
+        <h3>Product 03</h3>
+        <div class="rating">★★★★★</div>
+        <p>Cladding product for outdoor projects.</p>
+        <p><span class="price">$44.00</span></p>
+        <a class="button" href="12-product-detail.html">View Product</a>
+      </div>
+    </article>
 <article class="product-card" data-card data-name="Product 04" data-category="Cladding">
-
-<img src="assets/product-04.svg" alt="Product 04">
-<div class="product-card-content"><h3>Product 04</h3><div class="rating">★★★★★</div><p>Cladding product for outdoor projects.</p><p><span class="price">$49.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+      
+      <img src="assets/product-04.svg" alt="Product 04">
+      <div class="product-card-content">
+        <h3>Product 04</h3>
+        <div class="rating">★★★★★</div>
+        <p>Cladding product for outdoor projects.</p>
+        <p><span class="price">$49.00</span></p>
+        <a class="button" href="12-product-detail.html">View Product</a>
+      </div>
+    </article>
 <article class="product-card" data-card data-name="Product 05" data-category="Fencing">
+      <span class="badge">Sale</span>
+      <img src="assets/product-05.svg" alt="Product 05">
+      <div class="product-card-content">
+        <h3>Product 05</h3>
+        <div class="rating">★★★★★</div>
+        <p>Fencing product for outdoor projects.</p>
+        <p><span class="price">$54.00</span></p>
+        <a class="button" href="12-product-detail.html">View Product</a>
+      </div>
+    </article>
+<article class="product-card" data-card data-name="Product 06" data-category="Accessories">
+      
+      <img src="assets/product-06.svg" alt="Product 06">
+      <div class="product-card-content">
+        <h3>Product 06</h3>
+        <div class="rating">★★★★★</div>
+        <p>Accessories product for outdoor projects.</p>
+        <p><span class="price">$59.00</span></p>
+        <a class="button" href="12-product-detail.html">View Product</a>
+      </div>
+    </article>
+      </div>
+    </div>
+  </div>
 
-<img src="assets/product-05.svg" alt="Product 05">
-<div class="product-card-content"><h3>Product 05</h3><div class="rating">★★★★★</div><p>Fencing product for outdoor projects.</p><p><span class="price">$54.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
-<article class="product-card" data-card data-name="Product 06" data-category="Fencing">
+  <div class="code">&lt;div class="filter-layout-optimized"&gt;
+  &lt;aside class="filter-panel"&gt;
+    &lt;label class="filter-option"&gt;
+      &lt;input type="checkbox"&gt;
+      &lt;span&gt;Decking&lt;/span&gt;
+      &lt;em class="filter-count"&gt;12&lt;/em&gt;
+    &lt;/label&gt;
+  &lt;/aside&gt;
 
-<img src="assets/product-06.svg" alt="Product 06">
-<div class="product-card-content"><h3>Product 06</h3><div class="rating">★★★★★</div><p>Fencing product for outdoor projects.</p><p><span class="price">$59.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article></div></div></section>
-<section class="summary"><h2>本页总结</h2><p>侧栏先做静态结构，后期分类、属性和价格筛选可以动态替换。</p></section>
-</main><script src="js/main.js"></script></body></html>
+  &lt;div class="products-area"&gt;
+    &lt;div class="toolbar"&gt;...&lt;/div&gt;
+    &lt;div class="grid"&gt;...products...&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+</section>
+
+
+    <section class="summary">
+      <h2>本页总结</h2>
+      <p>分类侧栏不要只是简单 checkbox 堆叠。真实商城更需要清晰的分组、整行点击、数量提示、已选标签和移动端适配。</p>
+    </section>
+  </main>
+  
+  <script src="js/main.js"></script>
+</body>
+</html>

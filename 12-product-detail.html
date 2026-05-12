@@ -1,27 +1,170 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>12 产品详情页：图片 + 信息 + 加入购物车</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page">
-<section class="hero"><div class="hero-card"><h1>12 产品详情页：图片 + 信息 + 加入购物车</h1><p>左侧图片，右侧购买信息。</p></div><img src="assets/page-12.svg" alt="12 产品详情页：图片 + 信息 + 加入购物车"></section>
-<nav class="nav"><a href="index.html">首页</a>
-<a href="01-page-structure.html">01 页面结构</a>
-<a href="02-header-navigation.html">02 头部导航</a>
-<a href="03-hero-banner.html">03 首页 Banner</a>
-<a href="04-product-card.html">04 产品卡片</a>
-<a href="05-product-grid.html">05 产品列表</a>
-<a href="06-responsive-grid.html">06 响应式列表</a>
-<a href="07-category-sidebar.html">07 分类侧栏</a>
-<a href="08-toolbar-filter.html">08 搜索筛选</a>
-<a href="09-card-details.html">09 卡片细节</a>
-<a href="10-list-view.html">10 列表视图</a>
-<a href="11-pagination.html">11 分页</a>
-<a href="12-product-detail.html">12 产品详情</a>
-<a href="13-product-gallery.html">13 产品图集</a>
-<a href="14-variation-selector.html">14 规格选择</a>
-<a href="15-product-tabs.html">15 详情 Tab</a>
-<a href="16-related-products.html">16 相关产品</a>
-<a href="17-cart-page.html">17 购物车</a>
-<a href="18-checkout-page.html">18 结账页</a>
-<a href="19-account-orders.html">19 账户订单</a>
-<a href="20-complete-store-page.html">20 完整页面</a></nav>
-<section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>产品详情</span><span>主图</span><span>价格</span><span>数量</span></div></section>
-<section class="demo"><h2>产品详情页基础结构</h2><div class="detail"><div class="gallery"><img src="assets/product-01.svg"><div class="thumbs"><img src="assets/product-01.svg"><img src="assets/product-02.svg"><img src="assets/product-03.svg"><img src="assets/product-04.svg"></div></div><div class="summary-side"><h2>Composite Decking Board</h2><div class="rating">★★★★★ <span class="note">(24 reviews)</span></div><p><span class="old">$59.00</span><span class="price">$39.00</span></p><p class="note">Durable WPC decking board for outdoor projects.</p><div class="qty"><label>Qty</label><input type="number" value="1"></div><a class="button" href="17-cart-page.html">Add to Cart</a> <a class="button secondary">Request Sample</a></div></div></section>
-<section class="summary"><h2>本页总结</h2><p>产品详情页的核心是图片、标题、价格、描述、数量和购买按钮。</p></section>
-</main><script src="js/main.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12 产品详情页：打磨后的 Swiper 轮播版</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>12 产品详情页：打磨后的 Swiper 轮播版</h1>
+        <p>优化箭头、缩略图、按钮和购买信息，让产品详情页更接近真实 WooCommerce 商品页。</p>
+      </div>
+      <img src="assets/page-12.svg" alt="12 产品详情页：打磨后的 Swiper 轮播版">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页学习重点</h2>
+      <div class="tag-list"><span>Swiper</span><span>产品详情</span><span>箭头优化</span><span>缩略图</span><span>按钮层级</span></div>
+    </section>
+
+    
+<section class="card">
+  <h2>本次继续打磨点</h2>
+  <ul class="checklist">
+    <li>Swiper 箭头改成圆形半透明按钮，更明显也更接近真实商城</li>
+    <li>缩略图选中状态加强，当前图片更容易识别</li>
+    <li>右侧购买面板增加库存、样品、质保等状态标签</li>
+    <li>按钮分成主按钮和辅助按钮，后期更容易接 Add to Cart / Request Sample</li>
+  </ul>
+</section>
+
+<section class="demo">
+  <h2>产品详情页：打磨后的 Swiper 轮播</h2>
+
+  <div class="swiper-product-layout">
+    <div class="swiper-gallery">
+      <div class="swiper product-main-swiper">
+        <div class="swiper-wrapper">
+          
+        <div class="swiper-slide">
+          <img src="assets/product-01.svg" alt="Product image 1">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-02.svg" alt="Product image 2">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-03.svg" alt="Product image 3">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-04.svg" alt="Product image 4">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-05.svg" alt="Product image 5">
+        </div>
+        </div>
+
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+      <div class="swiper product-thumbs-swiper">
+        <div class="swiper-wrapper">
+          
+        <div class="swiper-slide">
+          <img src="assets/product-01.svg" alt="Product thumbnail 1">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-02.svg" alt="Product thumbnail 2">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-03.svg" alt="Product thumbnail 3">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-04.svg" alt="Product thumbnail 4">
+        </div>
+
+        <div class="swiper-slide">
+          <img src="assets/product-05.svg" alt="Product thumbnail 5">
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-info-panel polished">
+      <h2>Composite Decking Board</h2>
+      <div class="rating">★★★★★ <span class="note">(24 reviews)</span></div>
+
+      <div class="product-status-row">
+        <span class="product-pill">In stock</span>
+        <span class="product-pill purple">Free sample available</span>
+        <span class="product-pill purple">10-year warranty</span>
+      </div>
+
+      <div class="product-price-large">
+        <span class="old">$59.00</span>
+        <span class="price">$39.00</span>
+      </div>
+
+      <p class="note">Durable, low-maintenance WPC decking board for residential and commercial outdoor projects.</p>
+
+      <ul class="product-meta-list">
+        <li><strong>Material</strong><span>WPC Co-extrusion</span></li>
+        <li><strong>Surface</strong><span>Wood grain</span></li>
+        <li><strong>Use</strong><span>Outdoor decking</span></li>
+        <li><strong>Lead time</strong><span>2–3 weeks</span></li>
+      </ul>
+
+      <div class="qty">
+        <label>Qty</label>
+        <input type="number" value="1" min="1">
+      </div>
+
+      <div class="product-detail-actions">
+        <a class="button button-wide" href="17-cart-page.html">Add to Cart</a>
+        <a class="button outline button-wide" href="#">Request Sample</a>
+      </div>
+
+      <div class="dynamic-note">
+        后期动态化思路：主图使用产品 featured image，缩略图使用 product gallery images，按钮连接 WooCommerce add_to_cart。
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <section class="summary">
+      <h2>本页总结</h2>
+      <p>产品详情页已经从基础布局升级到更接近真实商城的结构。后续动态化时，可以逐步替换产品图、价格、库存和按钮数据。</p>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

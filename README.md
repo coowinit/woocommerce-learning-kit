@@ -150,3 +150,195 @@ woocommerce-html-page-learning-kit/
 ## License
 
 MIT License
+
+
+## 本次优化说明
+
+本版本针对后续真正制作 WooCommerce 商城页面的方向，重点优化了以下页面：
+
+### 1. 分类侧边栏
+
+`07-category-sidebar.html`
+
+- 优化筛选项布局
+- 增加筛选数量、已选标签、Reset 按钮
+- 桌面端使用 sticky 侧栏
+- 手机端自动变成顶部筛选卡片
+- 更适合后期替换为 WooCommerce 分类、属性、价格筛选数据
+
+### 2. 产品详情页 Swiper 轮播
+
+`12-product-detail.html`
+
+- 主图区域改为 Swiper 轮播
+- 增加缩略图 Swiper
+- 支持手机端滑动
+- 手机端隐藏左右箭头，保留滑动体验和分页点
+- 后期可替换为 WooCommerce 产品主图和产品图集
+
+### 3. 产品图集 Swiper
+
+`13-product-gallery.html`
+
+- 单独整理产品图集 Swiper 结构
+- 方便后期作为产品详情页图集模块复用
+
+### 4. 规格选择联动图片
+
+`14-variation-selector.html`
+
+- 点击颜色选项时切换左侧产品大图
+- 同步更新价格、SKU、当前变体名称
+- 模拟 WooCommerce 可变产品 Variation Image 效果
+- 后期可把 `data-image`、`data-price`、`data-sku` 替换为 WooCommerce 变体数据
+
+## 动态化学习方向
+
+后续如果把这些静态页面改成真正的 WooCommerce 页面，可以按下面顺序学习：
+
+```text
+静态产品卡片
+↓
+WooCommerce product loop
+↓
+静态产品列表
+↓
+archive-product.php / content-product.php
+↓
+静态产品详情页
+↓
+single-product.php / product image gallery
+↓
+静态规格选择
+↓
+variable product / variation data
+↓
+静态购物车和结账页
+↓
+cart template / checkout template
+```
+
+## Swiper 说明
+
+本版本的产品详情页和产品图集页使用 Swiper CDN：
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+```
+
+如果后期要完全离线使用，可以把 Swiper 的 CSS 和 JS 下载到本地，再改成本地路径。
+
+
+## Polished UI v2 更新说明
+
+本次继续对几个重点页面进行视觉和交互打磨，让这套 HTML 页面更适合作为后续真实 WooCommerce 商城页面的静态参考。
+
+### 产品详情页
+
+`12-product-detail.html`
+
+- Swiper 左右箭头改为圆形按钮
+- 优化箭头颜色、背景、悬浮状态和点击区域
+- 优化分页点样式
+- 缩略图选中状态更明显
+- 右侧产品信息卡片增加库存、样品、质保标签
+- 按钮区分主按钮和辅助按钮
+
+### 产品图集页
+
+`13-product-gallery.html`
+
+- 同步优化 Swiper 箭头、分页点和缩略图
+- 更适合作为后续产品详情页 gallery 模块复用
+
+### 规格选项页面
+
+`14-variation-selector.html`
+
+- 规格选项增加颜色圆点
+- 增加库存状态
+- 增加当前选中变体提示
+- 点击颜色选项时同步更新主图、标题、价格、SKU、描述
+- 左侧增加变体缩略图，点击缩略图也能切换变体
+- 更接近 WooCommerce variable product 的前端体验
+
+### 我的账户页面
+
+`19-account-orders.html`
+
+- 优化账户菜单样式
+- 增加订单统计卡片
+- 订单状态改成 badge
+- 增加订单操作链接
+- 更接近 WooCommerce My Account 页面结构
+
+## 后续真正动态化时的对应思路
+
+```text
+Swiper 主图
+→ WooCommerce product featured image
+
+Swiper 缩略图
+→ WooCommerce product gallery images
+
+颜色 / 尺寸选项
+→ WooCommerce variation attributes
+
+价格 / SKU / 库存
+→ WooCommerce variation data
+
+账户菜单
+→ WooCommerce My Account endpoints
+
+订单表格
+→ Customer orders loop
+```
+
+
+## Brand Product Detail Polish 更新说明
+
+本次重点优化 `14-variation-selector.html`，让规格选项页面更像品牌官网产品详情界面。
+
+### 重点变化
+
+- 左侧产品图片区更干净，增加浮动标签和当前颜色提示
+- 缩略图区域更清晰，选中状态更明显
+- 右侧信息区重新梳理层级：
+  - 面包屑
+  - 产品标题
+  - 评分
+  - SKU
+  - 价格
+  - 产品描述
+  - 核心卖点
+  - 颜色选项
+  - 长度选项
+  - 数量和按钮
+  - 规格信息
+- 颜色选项更像真实商城：
+  - 色块
+  - 名称
+  - 简短说明
+  - 库存状态
+- 点击颜色或缩略图时，会同步更新：
+  - 主图
+  - 产品标题
+  - 当前选中颜色
+  - 价格
+  - SKU
+  - 描述
+- 修复了多个 `data-variation-name` 只更新一个的问题，现在同类字段会一起更新。
+
+### 后期动态化方向
+
+后期接入 WooCommerce 时，可以把页面中的静态 `data-*` 替换为 WooCommerce variation data：
+
+```text
+data-image       → variation image
+data-name        → variation attributes / display name
+data-price       → variation price html
+data-sku         → variation sku
+data-description → variation description
+stock pill       → variation availability
+```
