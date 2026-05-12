@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 产品 CRUD 与查询</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>03 产品 CRUD 与查询</h1>
+        <p>整理 wc_get_product、WC_Product_Simple、WC_Product_Variable、产品查询和批量更新场景。</p>
+      </div>
+      <img src="assets/03-product-crud.svg" alt="03 产品 CRUD 与查询">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-extension-foundation.html">01</a>
+      <a href="02-hooks-conditions.html">02</a>
+      <a href="03-product-crud.html">03</a>
+      <a href="04-variable-products-attributes.html">04</a>
+      <a href="05-product-fields-tabs.html">05</a>
+      <a href="06-pricing-discounts-fees.html">06</a>
+      <a href="07-cart-session-notices.html">07</a>
+      <a href="08-checkout-fields-validation.html">08</a>
+      <a href="09-orders-hpos-crud.html">09</a>
+      <a href="10-order-items-refunds.html">10</a>
+      <a href="11-emails-notifications.html">11</a>
+      <a href="12-shipping-methods-zones.html">12</a>
+      <a href="13-payment-gateway.html">13</a>
+      <a href="14-coupons-promotions.html">14</a>
+      <a href="15-customers-account-endpoints.html">15</a>
+      <a href="16-stock-inventory.html">16</a>
+      <a href="17-rest-api-webhooks.html">17</a>
+      <a href="18-blocks-store-api.html">18</a>
+      <a href="19-admin-reports-analytics.html">19</a>
+      <a href="20-performance-security-debug.html">20</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页关键词</h2>
+      <div class="tag-list">
+        <span>wc_get_product</span>
+        <span>WC_Product_Simple</span>
+        <span>WC_Product_Query</span>
+        <span>product CRUD</span>
+        <span>SKU</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>学习目标</h2>
+      <ul class="checklist">
+        <li>会读取产品对象</li>
+        <li>会创建简单产品</li>
+        <li>会用 CRUD 更新价格库存</li>
+        <li>会按 SKU 查询产品</li>
+        <li>知道不要直接改 postmeta</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>代码使用提醒</h2>
+      <p>本页代码用于学习和研究。复制到正式 WooCommerce 网站前，请先备份，并优先在测试环境验证。</p>
+      <p>凡是影响价格、库存、支付、订单、邮件和客户数据的代码，都需要完整测试购物车、结账、付款、退款、邮件和后台订单处理流程。</p>
+    </section>
+
+    <section class="code-grid">
+      
+    <article class="code-card">
+      <div class="code-title">
+        <h3>1. 读取产品对象和常用数据</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$product = wc_get_product( 123 );
+
+if ( $product ) {
+    $name  = $product-&gt;get_name();
+    $sku   = $product-&gt;get_sku();
+    $price = $product-&gt;get_price();
+
+    echo esc_html( $name . ' / ' . $sku . ' / ' . wc_price( $price ) );
+}</div>
+      <div class="code-note">优先使用 WooCommerce CRUD 方法，而不是直接 get_post_meta。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>2. 创建简单产品</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_create_simple_product() {
+    $product = new WC_Product_Simple();
+
+    $product-&gt;set_name( 'Sample Decking Board' );
+    $product-&gt;set_sku( 'DECK-SAMPLE-001' );
+    $product-&gt;set_regular_price( '29.99' );
+    $product-&gt;set_description( 'A sample product created by code.' );
+    $product-&gt;set_status( 'publish' );
+
+    $product_id = $product-&gt;save();
+
+    return $product_id;
+}</div>
+      <div class="code-note">创建或更新产品时，最后必须 save()。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>3. 按 SKU 查找产品 ID</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$sku = 'DECK-SAMPLE-001';
+
+$product_id = wc_get_product_id_by_sku( $sku );
+
+if ( $product_id ) {
+    $product = wc_get_product( $product_id );
+}</div>
+      <div class="code-note">SKU 应保持唯一，便于同步 ERP、库存和导入数据。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>4. 更新产品价格和库存</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$product = wc_get_product( 123 );
+
+if ( $product ) {
+    $product-&gt;set_regular_price( '49.99' );
+    $product-&gt;set_sale_price( '39.99' );
+    $product-&gt;set_manage_stock( true );
+    $product-&gt;set_stock_quantity( 20 );
+    $product-&gt;set_stock_status( 'instock' );
+    $product-&gt;save();
+}</div>
+      <div class="code-note">价格和库存都建议通过 CRUD 方法更新。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>5. 使用 WC_Product_Query 查询产品</h3>
+        <span class="badge">进阶 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$query = new WC_Product_Query( array(
+    'limit'        =&gt; 8,
+    'status'       =&gt; 'publish',
+    'featured'     =&gt; true,
+    'orderby'      =&gt; 'date',
+    'order'        =&gt; 'DESC',
+    'return'       =&gt; 'objects',
+) );
+
+$products = $query-&gt;get_products();
+
+foreach ( $products as $product ) {
+    echo '&lt;h3&gt;' . esc_html( $product-&gt;get_name() ) . '&lt;/h3&gt;';
+}</div>
+      <div class="code-note">WC_Product_Query 比直接 WP_Query 更贴近 WooCommerce 产品数据。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>6. 批量给指定分类产品加标签</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_tag_products_in_category() {
+    $products = wc_get_products( array(
+        'limit'    =&gt; -1,
+        'category' =&gt; array( 'decking' ),
+        'return'   =&gt; 'ids',
+    ) );
+
+    foreach ( $products as $product_id ) {
+        wp_set_object_terms( $product_id, 'featured-decking', 'product_tag', true );
+    }
+}</div>
+      <div class="code-note">批量操作前建议先在测试环境跑，并限制范围。</div>
+    </article>
+
+    </section>
+
+    <section class="summary-box">
+      <h2>本页总结</h2>
+      <p>产品代码应优先使用 WooCommerce CRUD 和查询 API。这样更稳定，也更容易兼容缓存、同步和后续版本。</p>
+    </section>
+  </main>
+</body>
+</html>

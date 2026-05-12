@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>16 库存、SKU 与低库存提醒</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>16 库存、SKU 与低库存提醒</h1>
+        <p>整理库存读取、扣减、恢复、低库存邮件、自定义库存逻辑和后台库存列。</p>
+      </div>
+      <img src="assets/16-stock-inventory.svg" alt="16 库存、SKU 与低库存提醒">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-extension-foundation.html">01</a>
+      <a href="02-hooks-conditions.html">02</a>
+      <a href="03-product-crud.html">03</a>
+      <a href="04-variable-products-attributes.html">04</a>
+      <a href="05-product-fields-tabs.html">05</a>
+      <a href="06-pricing-discounts-fees.html">06</a>
+      <a href="07-cart-session-notices.html">07</a>
+      <a href="08-checkout-fields-validation.html">08</a>
+      <a href="09-orders-hpos-crud.html">09</a>
+      <a href="10-order-items-refunds.html">10</a>
+      <a href="11-emails-notifications.html">11</a>
+      <a href="12-shipping-methods-zones.html">12</a>
+      <a href="13-payment-gateway.html">13</a>
+      <a href="14-coupons-promotions.html">14</a>
+      <a href="15-customers-account-endpoints.html">15</a>
+      <a href="16-stock-inventory.html">16</a>
+      <a href="17-rest-api-webhooks.html">17</a>
+      <a href="18-blocks-store-api.html">18</a>
+      <a href="19-admin-reports-analytics.html">19</a>
+      <a href="20-performance-security-debug.html">20</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页关键词</h2>
+      <div class="tag-list">
+        <span>stock</span>
+        <span>SKU</span>
+        <span>inventory</span>
+        <span>low stock</span>
+        <span>backorders</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>学习目标</h2>
+      <ul class="checklist">
+        <li>会读取和更新库存</li>
+        <li>会监听低库存事件</li>
+        <li>会处理缺货状态</li>
+        <li>会按 SKU 同步库存</li>
+        <li>知道库存逻辑不能轻易绕过 WooCommerce</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>代码使用提醒</h2>
+      <p>本页代码用于学习和研究。复制到正式 WooCommerce 网站前，请先备份，并优先在测试环境验证。</p>
+      <p>凡是影响价格、库存、支付、订单、邮件和客户数据的代码，都需要完整测试购物车、结账、付款、退款、邮件和后台订单处理流程。</p>
+    </section>
+
+    <section class="code-grid">
+      
+    <article class="code-card">
+      <div class="code-title">
+        <h3>1. 读取库存信息</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$product = wc_get_product( 123 );
+
+if ( $product ) {
+    echo esc_html( $product-&gt;get_sku() );
+    echo esc_html( $product-&gt;get_stock_quantity() );
+    echo esc_html( $product-&gt;get_stock_status() );
+}</div>
+      <div class="code-note">库存状态和库存数量不是同一个概念。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>2. 更新库存数量</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$product = wc_get_product( 123 );
+
+if ( $product ) {
+    $product-&gt;set_manage_stock( true );
+    $product-&gt;set_stock_quantity( 50 );
+    $product-&gt;set_stock_status( 'instock' );
+    $product-&gt;save();
+}</div>
+      <div class="code-note">库存更新建议通过产品对象完成。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>3. 根据 SKU 同步库存</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_update_stock_by_sku( $sku, $qty ) {
+    $product_id = wc_get_product_id_by_sku( $sku );
+
+    if ( ! $product_id ) {
+        return false;
+    }
+
+    wc_update_product_stock( $product_id, absint( $qty ), 'set' );
+
+    return true;
+}</div>
+      <div class="code-note">外部 ERP 同步时常按 SKU 匹配产品。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>4. 监听低库存事件</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_low_stock_alert( $product ) {
+    if ( ! $product instanceof WC_Product ) {
+        return;
+    }
+
+    wp_mail(
+        'inventory@example.com',
+        'Low stock: ' . $product-&gt;get_name(),
+        'Current stock: ' . $product-&gt;get_stock_quantity()
+    );
+}
+add_action( 'woocommerce_low_stock', 'mywoo_low_stock_alert' );</div>
+      <div class="code-note">邮件提醒仍依赖 SMTP 送达。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>5. 下单后追加库存备注</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_order_stock_note( $order_id ) {
+    $order = wc_get_order( $order_id );
+
+    foreach ( $order-&gt;get_items() as $item ) {
+        $product = $item-&gt;get_product();
+
+        if ( $product &amp;&amp; $product-&gt;managing_stock() ) {
+            $order-&gt;add_order_note(
+                'Stock after order for ' . $product-&gt;get_name() . ': ' . $product-&gt;get_stock_quantity()
+            );
+        }
+    }
+}
+add_action( 'woocommerce_reduce_order_stock', 'mywoo_order_stock_note' );</div>
+      <div class="code-note">库存扣减后记录备注，便于排查。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>6. 禁止缺货产品购买</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_disable_purchase_for_backorder( $purchasable, $product ) {
+    if ( $product-&gt;is_on_backorder() ) {
+        return false;
+    }
+
+    return $purchasable;
+}
+add_filter( 'woocommerce_is_purchasable', 'mywoo_disable_purchase_for_backorder', 10, 2 );</div>
+      <div class="code-note">是否允许缺货购买要结合业务规则。</div>
+    </article>
+
+    </section>
+
+    <section class="summary-box">
+      <h2>本页总结</h2>
+      <p>库存代码要特别谨慎，因为它会影响真实订单和履约。SKU、库存数量、库存状态和缺货策略要统一管理。</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11 邮件通知与模板</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>11 邮件通知与模板</h1>
+        <p>整理订单邮件内容、邮件收件人、主题、标题、附件、HTML 邮件和自定义邮件触发。</p>
+      </div>
+      <img src="assets/11-emails-notifications.svg" alt="11 邮件通知与模板">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-extension-foundation.html">01</a>
+      <a href="02-hooks-conditions.html">02</a>
+      <a href="03-product-crud.html">03</a>
+      <a href="04-variable-products-attributes.html">04</a>
+      <a href="05-product-fields-tabs.html">05</a>
+      <a href="06-pricing-discounts-fees.html">06</a>
+      <a href="07-cart-session-notices.html">07</a>
+      <a href="08-checkout-fields-validation.html">08</a>
+      <a href="09-orders-hpos-crud.html">09</a>
+      <a href="10-order-items-refunds.html">10</a>
+      <a href="11-emails-notifications.html">11</a>
+      <a href="12-shipping-methods-zones.html">12</a>
+      <a href="13-payment-gateway.html">13</a>
+      <a href="14-coupons-promotions.html">14</a>
+      <a href="15-customers-account-endpoints.html">15</a>
+      <a href="16-stock-inventory.html">16</a>
+      <a href="17-rest-api-webhooks.html">17</a>
+      <a href="18-blocks-store-api.html">18</a>
+      <a href="19-admin-reports-analytics.html">19</a>
+      <a href="20-performance-security-debug.html">20</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页关键词</h2>
+      <div class="tag-list">
+        <span>woocommerce emails</span>
+        <span>email hooks</span>
+        <span>recipients</span>
+        <span>subject</span>
+        <span>attachments</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>学习目标</h2>
+      <ul class="checklist">
+        <li>会在订单邮件中插入内容</li>
+        <li>会修改邮件主题和收件人</li>
+        <li>会添加附件</li>
+        <li>会按状态触发自定义邮件逻辑</li>
+        <li>知道邮件送达还依赖 SMTP</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>代码使用提醒</h2>
+      <p>本页代码用于学习和研究。复制到正式 WooCommerce 网站前，请先备份，并优先在测试环境验证。</p>
+      <p>凡是影响价格、库存、支付、订单、邮件和客户数据的代码，都需要完整测试购物车、结账、付款、退款、邮件和后台订单处理流程。</p>
+    </section>
+
+    <section class="code-grid">
+      
+    <article class="code-card">
+      <div class="code-title">
+        <h3>1. 订单邮件表格后添加内容</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_email_extra_content( $order, $sent_to_admin, $plain_text, $email ) {
+    if ( $sent_to_admin ) {
+        return;
+    }
+
+    echo '&lt;p&gt;Thank you for your order. Our team will contact you soon.&lt;/p&gt;';
+}
+add_action( 'woocommerce_email_after_order_table', 'mywoo_email_extra_content', 10, 4 );</div>
+      <div class="code-note">适合给客户邮件补充说明。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>2. 修改新订单管理员收件人</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_new_order_recipients( $recipient, $order ) {
+    if ( ! $order instanceof WC_Order ) {
+        return $recipient;
+    }
+
+    $recipient .= ', sales@example.com';
+
+    return $recipient;
+}
+add_filter( 'woocommerce_email_recipient_new_order', 'mywoo_new_order_recipients', 10, 2 );</div>
+      <div class="code-note">多个收件人用英文逗号分隔。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>3. 根据订单地区增加收件人</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_region_based_order_recipient( $recipient, $order ) {
+    if ( ! $order instanceof WC_Order ) {
+        return $recipient;
+    }
+
+    if ( 'QLD' === $order-&gt;get_shipping_state() ) {
+        $recipient .= ', qld-sales@example.com';
+    }
+
+    return $recipient;
+}
+add_filter( 'woocommerce_email_recipient_new_order', 'mywoo_region_based_order_recipient', 20, 2 );</div>
+      <div class="code-note">按地区分配订单跟进很常见。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>4. 修改邮件主题</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_new_order_subject( $subject, $order ) {
+    if ( $order instanceof WC_Order ) {
+        $subject = 'New Order #' . $order-&gt;get_order_number() . ' - ' . $order-&gt;get_billing_state();
+    }
+
+    return $subject;
+}
+add_filter( 'woocommerce_email_subject_new_order', 'mywoo_new_order_subject', 10, 2 );</div>
+      <div class="code-note">邮件标题清晰有助于销售快速识别订单来源。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>5. 给邮件添加附件</h3>
+        <span class="badge">进阶 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_email_attachments( $attachments, $email_id, $order ) {
+    if ( 'customer_completed_order' === $email_id ) {
+        $file = WP_CONTENT_DIR . '/uploads/guides/installation-guide.pdf';
+
+        if ( file_exists( $file ) ) {
+            $attachments[] = $file;
+        }
+    }
+
+    return $attachments;
+}
+add_filter( 'woocommerce_email_attachments', 'mywoo_email_attachments', 10, 3 );</div>
+      <div class="code-note">附件过大会影响邮件送达，建议谨慎使用。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>6. 订单完成时发送内部提醒</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_completed_order_internal_notice( $order_id ) {
+    $order = wc_get_order( $order_id );
+
+    if ( ! $order ) {
+        return;
+    }
+
+    wp_mail(
+        'operations@example.com',
+        'Order completed: #' . $order-&gt;get_order_number(),
+        'Please archive documents for this completed order.'
+    );
+}
+add_action( 'woocommerce_order_status_completed', 'mywoo_completed_order_internal_notice' );</div>
+      <div class="code-note">内部自动邮件也需要 SMTP 和日志监控。</div>
+    </article>
+
+    </section>
+
+    <section class="summary-box">
+      <h2>本页总结</h2>
+      <p>WooCommerce 邮件开发常见于内容补充、收件人分配、标题优化和附件。邮件代码写好后，还要测试 SMTP 和垃圾箱。</p>
+    </section>
+  </main>
+</body>
+</html>

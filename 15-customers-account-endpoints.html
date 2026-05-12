@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>15 客户、账户与自定义 Endpoint</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>15 客户、账户与自定义 Endpoint</h1>
+        <p>整理客户数据、账户菜单、我的账户 endpoint、用户 meta 和订单列表扩展。</p>
+      </div>
+      <img src="assets/15-customers-account-endpoints.svg" alt="15 客户、账户与自定义 Endpoint">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-extension-foundation.html">01</a>
+      <a href="02-hooks-conditions.html">02</a>
+      <a href="03-product-crud.html">03</a>
+      <a href="04-variable-products-attributes.html">04</a>
+      <a href="05-product-fields-tabs.html">05</a>
+      <a href="06-pricing-discounts-fees.html">06</a>
+      <a href="07-cart-session-notices.html">07</a>
+      <a href="08-checkout-fields-validation.html">08</a>
+      <a href="09-orders-hpos-crud.html">09</a>
+      <a href="10-order-items-refunds.html">10</a>
+      <a href="11-emails-notifications.html">11</a>
+      <a href="12-shipping-methods-zones.html">12</a>
+      <a href="13-payment-gateway.html">13</a>
+      <a href="14-coupons-promotions.html">14</a>
+      <a href="15-customers-account-endpoints.html">15</a>
+      <a href="16-stock-inventory.html">16</a>
+      <a href="17-rest-api-webhooks.html">17</a>
+      <a href="18-blocks-store-api.html">18</a>
+      <a href="19-admin-reports-analytics.html">19</a>
+      <a href="20-performance-security-debug.html">20</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页关键词</h2>
+      <div class="tag-list">
+        <span>my account</span>
+        <span>endpoints</span>
+        <span>customer meta</span>
+        <span>WC_Customer</span>
+        <span>account menu</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>学习目标</h2>
+      <ul class="checklist">
+        <li>会读取客户对象</li>
+        <li>会添加我的账户菜单</li>
+        <li>会注册 account endpoint</li>
+        <li>会保存客户自定义字段</li>
+        <li>知道账户页面涉及隐私数据</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>代码使用提醒</h2>
+      <p>本页代码用于学习和研究。复制到正式 WooCommerce 网站前，请先备份，并优先在测试环境验证。</p>
+      <p>凡是影响价格、库存、支付、订单、邮件和客户数据的代码，都需要完整测试购物车、结账、付款、退款、邮件和后台订单处理流程。</p>
+    </section>
+
+    <section class="code-grid">
+      
+    <article class="code-card">
+      <div class="code-title">
+        <h3>1. 读取当前客户信息</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$user_id = get_current_user_id();
+
+if ( $user_id ) {
+    $customer = new WC_Customer( $user_id );
+
+    echo esc_html( $customer-&gt;get_billing_email() );
+    echo esc_html( $customer-&gt;get_billing_phone() );
+}</div>
+      <div class="code-note">客户信息可能来自用户 meta 和订单账单信息。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>2. 添加我的账户菜单项</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_account_menu_items( $items ) {
+    $new = array();
+
+    foreach ( $items as $key =&gt; $label ) {
+        $new[ $key ] = $label;
+
+        if ( 'orders' === $key ) {
+            $new['project-files'] = 'Project Files';
+        }
+    }
+
+    return $new;
+}
+add_filter( 'woocommerce_account_menu_items', 'mywoo_account_menu_items' );</div>
+      <div class="code-note">可以在我的账户中插入自定义功能入口。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>3. 注册我的账户 endpoint</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_add_account_endpoint() {
+    add_rewrite_endpoint( 'project-files', EP_ROOT | EP_PAGES );
+}
+add_action( 'init', 'mywoo_add_account_endpoint' );</div>
+      <div class="code-note">新增 endpoint 后需要刷新固定链接。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>4. 输出 endpoint 内容</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_project_files_endpoint_content() {
+    echo '&lt;h3&gt;Project Files&lt;/h3&gt;';
+    echo '&lt;p&gt;Your downloadable project documents will appear here.&lt;/p&gt;';
+}
+add_action( 'woocommerce_account_project-files_endpoint', 'mywoo_project_files_endpoint_content' );</div>
+      <div class="code-note">hook 名包含 endpoint slug。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>5. 保存客户资料字段</h3>
+        <span class="badge">进阶 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_save_account_extra_fields( $user_id ) {
+    if ( isset( $_POST['company_type'] ) ) {
+        update_user_meta(
+            $user_id,
+            'company_type',
+            sanitize_text_field( wp_unslash( $_POST['company_type'] ) )
+        );
+    }
+}
+add_action( 'woocommerce_save_account_details', 'mywoo_save_account_extra_fields' );</div>
+      <div class="code-note">客户输入必须 sanitize。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>6. 账户订单列表增加操作按钮</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_account_order_actions( $actions, $order ) {
+    if ( $order-&gt;has_status( 'completed' ) ) {
+        $actions['download-guide'] = array(
+            'url'  =&gt; home_url( '/installation-guide/' ),
+            'name' =&gt; 'Installation Guide',
+        );
+    }
+
+    return $actions;
+}
+add_filter( 'woocommerce_my_account_my_orders_actions', 'mywoo_account_order_actions', 10, 2 );</div>
+      <div class="code-note">可根据订单状态给客户提供后续操作。</div>
+    </article>
+
+    </section>
+
+    <section class="summary-box">
+      <h2>本页总结</h2>
+      <p>账户页代码涉及客户隐私和订单信息，扩展时要做好登录判断、权限控制和数据转义。</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>06 价格、折扣与费用</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>06 价格、折扣与费用</h1>
+        <p>整理价格显示、动态价格、购物车费用、条件折扣、价格 HTML 和税费相关注意点。</p>
+      </div>
+      <img src="assets/06-pricing-discounts-fees.svg" alt="06 价格、折扣与费用">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-extension-foundation.html">01</a>
+      <a href="02-hooks-conditions.html">02</a>
+      <a href="03-product-crud.html">03</a>
+      <a href="04-variable-products-attributes.html">04</a>
+      <a href="05-product-fields-tabs.html">05</a>
+      <a href="06-pricing-discounts-fees.html">06</a>
+      <a href="07-cart-session-notices.html">07</a>
+      <a href="08-checkout-fields-validation.html">08</a>
+      <a href="09-orders-hpos-crud.html">09</a>
+      <a href="10-order-items-refunds.html">10</a>
+      <a href="11-emails-notifications.html">11</a>
+      <a href="12-shipping-methods-zones.html">12</a>
+      <a href="13-payment-gateway.html">13</a>
+      <a href="14-coupons-promotions.html">14</a>
+      <a href="15-customers-account-endpoints.html">15</a>
+      <a href="16-stock-inventory.html">16</a>
+      <a href="17-rest-api-webhooks.html">17</a>
+      <a href="18-blocks-store-api.html">18</a>
+      <a href="19-admin-reports-analytics.html">19</a>
+      <a href="20-performance-security-debug.html">20</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页关键词</h2>
+      <div class="tag-list">
+        <span>price filters</span>
+        <span>cart fees</span>
+        <span>dynamic pricing</span>
+        <span>tax display</span>
+        <span>wc_price</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>学习目标</h2>
+      <ul class="checklist">
+        <li>会修改价格显示</li>
+        <li>会添加购物车费用</li>
+        <li>会根据条件做折扣</li>
+        <li>知道价格计算和显示要分开</li>
+        <li>理解税费和折扣需要谨慎测试</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>代码使用提醒</h2>
+      <p>本页代码用于学习和研究。复制到正式 WooCommerce 网站前，请先备份，并优先在测试环境验证。</p>
+      <p>凡是影响价格、库存、支付、订单、邮件和客户数据的代码，都需要完整测试购物车、结账、付款、退款、邮件和后台订单处理流程。</p>
+    </section>
+
+    <section class="code-grid">
+      
+    <article class="code-card">
+      <div class="code-title">
+        <h3>1. 修改价格 HTML 显示</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_custom_price_html( $price_html, $product ) {
+    if ( $product-&gt;is_on_sale() ) {
+        $price_html .= '&lt;span class="sale-note"&gt; Limited time offer&lt;/span&gt;';
+    }
+
+    return $price_html;
+}
+add_filter( 'woocommerce_get_price_html', 'mywoo_custom_price_html', 10, 2 );</div>
+      <div class="code-note">这个只修改显示，不一定改变实际结账价格。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>2. 给指定分类产品前台隐藏价格</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_hide_price_for_quote_category( $price_html, $product ) {
+    if ( has_term( 'quote-only', 'product_cat', $product-&gt;get_id() ) ) {
+        return '&lt;span class="quote-only"&gt;Request a Quote&lt;/span&gt;';
+    }
+
+    return $price_html;
+}
+add_filter( 'woocommerce_get_price_html', 'mywoo_hide_price_for_quote_category', 10, 2 );</div>
+      <div class="code-note">隐藏价格不等于禁止购买，还需要控制购买按钮。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>3. 购物车中添加手续费</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_add_handling_fee( $cart ) {
+    if ( is_admin() &amp;&amp; ! defined( 'DOING_AJAX' ) ) {
+        return;
+    }
+
+    if ( $cart-&gt;get_subtotal() &lt; 100 ) {
+        $cart-&gt;add_fee( 'Small Order Handling Fee', 10, true );
+    }
+}
+add_action( 'woocommerce_cart_calculate_fees', 'mywoo_add_handling_fee' );</div>
+      <div class="code-note">费用是否 taxable 要按业务和税务规则确认。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>4. 基于购物车小计添加折扣</h3>
+        <span class="badge">实用 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_bulk_order_discount( $cart ) {
+    if ( $cart-&gt;get_subtotal() &gt;= 500 ) {
+        $discount = $cart-&gt;get_subtotal() * 0.05;
+        $cart-&gt;add_fee( 'Bulk Order Discount', -$discount, false );
+    }
+}
+add_action( 'woocommerce_cart_calculate_fees', 'mywoo_bulk_order_discount' );</div>
+      <div class="code-note">负 fee 可做折扣，但要认真测试税费、退款和报表表现。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>5. 动态调整购物车商品价格</h3>
+        <span class="badge">进阶 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_dynamic_cart_item_price( $cart ) {
+    if ( is_admin() &amp;&amp; ! defined( 'DOING_AJAX' ) ) {
+        return;
+    }
+
+    foreach ( $cart-&gt;get_cart() as $cart_item ) {
+        $product = $cart_item['data'];
+
+        if ( has_term( 'clearance', 'product_cat', $product-&gt;get_id() ) ) {
+            $product-&gt;set_price( $product-&gt;get_price() * 0.9 );
+        }
+    }
+}
+add_action( 'woocommerce_before_calculate_totals', 'mywoo_dynamic_cart_item_price' );</div>
+      <div class="code-note">动态改价要避免重复叠加，并测试购物车刷新、优惠券、税费。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>6. 格式化价格输出</h3>
+        <span class="badge">基础 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$amount = 123.45;
+
+echo wc_price( $amount );</div>
+      <div class="code-note">前台显示金额时使用 wc_price，自动带货币格式。</div>
+    </article>
+
+    </section>
+
+    <section class="summary-box">
+      <h2>本页总结</h2>
+      <p>价格开发要区分“显示价格”和“实际计算价格”。凡是影响购物车总价的代码，都必须测试税费、优惠券、退款和订单记录。</p>
+    </section>
+  </main>
+</body>
+</html>

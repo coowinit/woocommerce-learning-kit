@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>19 后台订单、报表与管理增强</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>19 后台订单、报表与管理增强</h1>
+        <p>整理后台订单列、筛选、批量操作、订单搜索、日志和 Analytics 数据扩展思路。</p>
+      </div>
+      <img src="assets/19-admin-reports-analytics.svg" alt="19 后台订单、报表与管理增强">
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-extension-foundation.html">01</a>
+      <a href="02-hooks-conditions.html">02</a>
+      <a href="03-product-crud.html">03</a>
+      <a href="04-variable-products-attributes.html">04</a>
+      <a href="05-product-fields-tabs.html">05</a>
+      <a href="06-pricing-discounts-fees.html">06</a>
+      <a href="07-cart-session-notices.html">07</a>
+      <a href="08-checkout-fields-validation.html">08</a>
+      <a href="09-orders-hpos-crud.html">09</a>
+      <a href="10-order-items-refunds.html">10</a>
+      <a href="11-emails-notifications.html">11</a>
+      <a href="12-shipping-methods-zones.html">12</a>
+      <a href="13-payment-gateway.html">13</a>
+      <a href="14-coupons-promotions.html">14</a>
+      <a href="15-customers-account-endpoints.html">15</a>
+      <a href="16-stock-inventory.html">16</a>
+      <a href="17-rest-api-webhooks.html">17</a>
+      <a href="18-blocks-store-api.html">18</a>
+      <a href="19-admin-reports-analytics.html">19</a>
+      <a href="20-performance-security-debug.html">20</a>
+    </nav>
+
+    <section class="card">
+      <h2>本页关键词</h2>
+      <div class="tag-list">
+        <span>admin columns</span>
+        <span>bulk actions</span>
+        <span>order list</span>
+        <span>reports</span>
+        <span>logs</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>学习目标</h2>
+      <ul class="checklist">
+        <li>会给后台订单列表加列</li>
+        <li>会添加订单筛选</li>
+        <li>会添加批量操作</li>
+        <li>会写 WooCommerce 日志</li>
+        <li>知道 HPOS 后订单后台不应依赖 posts screen 假设</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>代码使用提醒</h2>
+      <p>本页代码用于学习和研究。复制到正式 WooCommerce 网站前，请先备份，并优先在测试环境验证。</p>
+      <p>凡是影响价格、库存、支付、订单、邮件和客户数据的代码，都需要完整测试购物车、结账、付款、退款、邮件和后台订单处理流程。</p>
+    </section>
+
+    <section class="code-grid">
+      
+    <article class="code-card">
+      <div class="code-title">
+        <h3>1. 后台订单列表增加列</h3>
+        <span class="badge">后台 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_shop_order_columns( $columns ) {
+    $columns['sales_owner'] = 'Sales Owner';
+    return $columns;
+}
+add_filter( 'manage_woocommerce_page_wc-orders_columns', 'mywoo_shop_order_columns' );</div>
+      <div class="code-note">HPOS 订单管理页可能使用 wc-orders screen，列 hook 要注意环境。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>2. 输出订单自定义列内容</h3>
+        <span class="badge">后台 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_shop_order_column_content( $column, $order ) {
+    if ( 'sales_owner' === $column &amp;&amp; $order instanceof WC_Order ) {
+        echo esc_html( $order-&gt;get_meta( '_sales_owner' ) );
+    }
+}
+add_action( 'manage_woocommerce_page_wc-orders_custom_column', 'mywoo_shop_order_column_content', 10, 2 );</div>
+      <div class="code-note">HPOS 下优先使用 $order 对象读取 meta。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>3. 添加订单批量操作</h3>
+        <span class="badge">后台 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_order_bulk_actions( $actions ) {
+    $actions['mark_exported_to_erp'] = 'Mark exported to ERP';
+    return $actions;
+}
+add_filter( 'bulk_actions-woocommerce_page_wc-orders', 'mywoo_order_bulk_actions' );</div>
+      <div class="code-note">批量操作适合订单导出、标记、分配跟进人等。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>4. 处理订单批量操作</h3>
+        <span class="badge">后台 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_handle_order_bulk_action( $redirect_to, $action, $order_ids ) {
+    if ( 'mark_exported_to_erp' !== $action ) {
+        return $redirect_to;
+    }
+
+    foreach ( $order_ids as $order_id ) {
+        $order = wc_get_order( $order_id );
+        if ( $order ) {
+            $order-&gt;update_meta_data( '_exported_to_erp', 'yes' );
+            $order-&gt;save();
+        }
+    }
+
+    return add_query_arg( 'mywoo_exported', count( $order_ids ), $redirect_to );
+}
+add_filter( 'handle_bulk_actions-woocommerce_page_wc-orders', 'mywoo_handle_order_bulk_action', 10, 3 );</div>
+      <div class="code-note">批量操作必须考虑权限和数据量。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>5. 使用 WooCommerce Logger</h3>
+        <span class="badge">运维 · php</span>
+      </div>
+      <div class="code">&lt;?php
+$logger = wc_get_logger();
+
+$logger-&gt;info(
+    'Order exported to ERP successfully.',
+    array(
+        'source'   =&gt; 'mywoo-erp',
+        'order_id' =&gt; 123,
+    )
+);</div>
+      <div class="code-note">WooCommerce &gt; Status &gt; Logs 可查看 source 对应日志。</div>
+    </article>
+
+
+    <article class="code-card">
+      <div class="code-title">
+        <h3>6. 后台订单页添加提示框</h3>
+        <span class="badge">后台 · php</span>
+      </div>
+      <div class="code">&lt;?php
+function mywoo_order_admin_notice() {
+    $screen = get_current_screen();
+
+    if ( $screen &amp;&amp; false !== strpos( $screen-&gt;id, 'wc-orders' ) ) {
+        echo '&lt;div class="notice notice-info"&gt;&lt;p&gt;处理订单前请确认付款状态和配送地址。&lt;/p&gt;&lt;/div&gt;';
+    }
+}
+add_action( 'admin_notices', 'mywoo_order_admin_notice' );</div>
+      <div class="code-note">后台提示适合规范团队订单处理流程。</div>
+    </article>
+
+    </section>
+
+    <section class="summary-box">
+      <h2>本页总结</h2>
+      <p>后台增强能大幅提升运营效率，但订单列表和批量操作要兼容 HPOS，并注意权限、性能和误操作风险。</p>
+    </section>
+  </main>
+</body>
+</html>
