@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>21 动态化路线：静态 HTML 到 WooCommerce 页面</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page"><section class="hero"><div class="hero-card"><h1>21 动态化路线：静态 HTML 到 WooCommerce 页面</h1><p>修复布局错位，并用更清晰的路线图讲解静态页面如何逐步接入 WooCommerce 动态数据。</p></div><img src="assets/page-21.svg" alt="21 动态化路线：静态 HTML 到 WooCommerce 页面"></section><nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+      <a href="21-dynamic-roadmap.html">21 动态化路线</a>
+      <a href="22-product-card-loop.html">22 产品卡片动态化</a>
+      <a href="23-shop-archive-template.html">23 商店列表动态化</a>
+      <a href="24-single-product-template.html">24 产品详情动态化</a>
+      <a href="25-variation-data.html">25 变体数据动态化</a>
+      <a href="26-cart-checkout-account.html">26 购物车结账账户</a>
+    </nav><section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>动态化路线</span><span>静态模块</span><span>WooCommerce 模板</span><span>接入顺序</span></div></section>
+<section class="demo"><h2>核心思路：先保留结构，再替换数据</h2><div class="roadmap-flow"><article class="roadmap-card"><strong>静态 HTML 原型</strong><p>先把品牌风格、产品卡片、产品列表、详情页、筛选栏和按钮样式都做出来。</p><div class="mini-tags"><span>HTML</span><span>CSS</span><span>JS 交互</span></div></article><article class="roadmap-card"><strong>拆成模板片段</strong><p>把页面拆成 Header、产品卡片、产品列表、产品图集、规格选项等可复用模块。</p><div class="mini-tags"><span>模板结构</span><span>组件化</span><span>class 保留</span></div></article><article class="roadmap-card"><strong>接 WooCommerce 数据</strong><p>用产品循环、产品对象、变体数据、购物车和账户数据替换静态内容。</p><div class="mini-tags"><span>Product Loop</span><span>WC_Product</span><span>Variation</span></div></article></div></section>
+<section class="demo"><h2>推荐动态化顺序</h2><div class="roadmap-timeline"><div class="timeline-row"><div class="timeline-label">第一阶段</div><div class="timeline-content"><strong>只动态化产品卡片</strong><span>先把产品图片、标题、价格、链接替换成 WooCommerce 数据。这个阶段最容易看到成果，也最容易排查。</span></div></div><div class="timeline-row"><div class="timeline-label">第二阶段</div><div class="timeline-content"><strong>动态化商店页和分类页</strong><span>把产品 Grid 接到 WooCommerce Product Loop，再处理排序、分页、分类标题和面包屑。</span></div></div><div class="timeline-row"><div class="timeline-label">第三阶段</div><div class="timeline-content"><strong>动态化产品详情页</strong><span>接入产品标题、主图、图集、价格、短描述、SKU、Add to Cart，再处理相关产品和详情 Tab。</span></div></div><div class="timeline-row"><div class="timeline-label">第四阶段</div><div class="timeline-content"><strong>处理可变产品和变体数据</strong><span>把静态 data-image、data-price、data-sku 替换为 WooCommerce variation data。</span></div></div><div class="timeline-row"><div class="timeline-label">第五阶段</div><div class="timeline-content"><strong>购物车、结账、账户页做样式优化</strong><span>这些页面涉及订单流程，先保留 WooCommerce 默认逻辑，再逐步优化外观和局部模板。</span></div></div></div></section>
+<section class="demo"><h2>静态页面和 WooCommerce 动态页面的对应关系</h2><div class="mapping-table-wrap"><table class="mapping-table"><thead><tr><th>静态页面模块</th><th>动态化方向</th><th>常见文件 / 位置</th><th>学习优先级</th></tr></thead><tbody><tr><td>产品卡片</td><td>循环输出图片、标题、价格和按钮</td><td><span class="template-path">content-product.php</span></td><td>最高</td></tr><tr><td>产品列表</td><td>Shop / Category Archive 产品循环</td><td><span class="template-path">archive-product.php</span></td><td>最高</td></tr><tr><td>产品详情</td><td>单产品模板和产品对象</td><td><span class="template-path">single-product.php</span></td><td>高</td></tr><tr><td>产品图集</td><td>主图 + gallery images</td><td><span class="template-path">product-image.php</span></td><td>中</td></tr><tr><td>规格选项</td><td>可变产品属性和 variation data</td><td><span class="template-path">variable.php</span></td><td>中高</td></tr><tr><td>购物车 / 结账 / 账户</td><td>先用默认流程，再改样式</td><td>Cart / Checkout / My Account</td><td>后期</td></tr></tbody></table></div></section><section class="dynamic-note-card">最重要的原则：不要先追求“全部动态化”。先把最小模块跑通，例如一个产品卡片能读取真实产品数据，再慢慢扩大到列表和详情页。</section><section class="summary"><h2>本页总结</h2><p>动态化的关键不是一次性重写所有页面，而是先保留现有 HTML 结构，再按产品卡片、产品列表、产品详情、变体、购物车结账的顺序逐步替换数据。</p></section></main><script src="js/main.js"></script></body></html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>25 变体数据动态化：从 data-* 到 Variation Data</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page"><section class="hero"><div class="hero-card"><h1>25 变体数据动态化：从 data-* 到 Variation Data</h1><p>更详细地整理规格选项页面如何从静态 data-* 模拟数据，逐步接入 WooCommerce 可变产品数据。</p></div><img src="assets/page-25.svg" alt="25 变体数据动态化：从 data-* 到 Variation Data"></section><nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+      <a href="21-dynamic-roadmap.html">21 动态化路线</a>
+      <a href="22-product-card-loop.html">22 产品卡片动态化</a>
+      <a href="23-shop-archive-template.html">23 商店列表动态化</a>
+      <a href="24-single-product-template.html">24 产品详情动态化</a>
+      <a href="25-variation-data.html">25 变体数据动态化</a>
+      <a href="26-cart-checkout-account.html">26 购物车结账账户</a>
+    </nav><section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>可变产品</span><span>Variation Data</span><span>规格选项</span><span>图片联动</span><span>库存</span></div></section>
+<section class="demo"><h2>你现在的静态变体模型</h2><div class="code">&lt;button
+  data-variation-option
+  data-image="assets/product-02.svg"
+  data-name="Walnut Decking"
+  data-price="$42.00"
+  data-sku="DECK-WALNUT-220"
+  data-description="Darker premium tone..."&gt;
+  Walnut
+&lt;/button&gt;</div><p class="note">这套结构非常适合学习，因为它把变体图片、价格、SKU、描述都清楚地拆开了。</p></section>
+<section class="demo"><h2>WooCommerce 可变产品动态化会遇到什么</h2><div class="dynamic-two-col"><div class="dynamic-mini-card"><h3>后台数据</h3><ul><li>产品类型：Variable product</li><li>属性：Color、Length、Size</li><li>变体：Teak / Walnut / Grey</li><li>每个变体有价格、SKU、库存、图片</li></ul></div><div class="dynamic-mini-card"><h3>前台交互</h3><ul><li>选择属性</li><li>匹配一个具体 variation</li><li>更新价格和库存</li><li>更新主图和 SKU</li><li>允许加入购物车</li></ul></div></div></section>
+<section class="demo"><h2>静态 data-* 和 variation data 对应关系</h2><div class="mapping-table-wrap"><table class="mapping-table"><thead><tr><th>静态字段</th><th>动态字段</th><th>页面表现</th></tr></thead><tbody><tr><td><code>data-image</code></td><td>variation image</td><td>切换左侧主图和缩略图</td></tr><tr><td><code>data-price</code></td><td>price html</td><td>更新当前显示价格</td></tr><tr><td><code>data-sku</code></td><td>variation sku</td><td>更新 SKU 信息</td></tr><tr><td><code>data-description</code></td><td>variation description</td><td>更新选中颜色的说明</td></tr><tr><td>In stock / Low stock</td><td>availability html</td><td>显示库存状态</td></tr></tbody></table></div></section>
+<section class="demo"><h2>推荐接入顺序</h2><div class="sequence-list"><div class="sequence-item"><div><strong>先使用 WooCommerce 默认变体表单</strong><span>确认后台可变产品、属性、变体、价格和库存都配置正确。</span></div></div><div class="sequence-item"><div><strong>观察默认变体切换行为</strong><span>选择颜色后，默认页面如何更新价格、库存、图片。</span></div></div><div class="sequence-item"><div><strong>再把你的品牌 UI 接入 variation data</strong><span>不要先完全重写逻辑，先监听默认变体变化，再同步更新你的 UI。</span></div></div><div class="sequence-item"><div><strong>最后优化体验</strong><span>比如色块、库存 badge、缩略图联动、禁用缺货变体。</span></div></div></div></section><section class="dynamic-warning-card">可变产品是 WooCommerce 前端中最容易出错的一块。不要一开始就重写整个 variation form，先理解默认逻辑，再做视觉替换。</section><section class="summary"><h2>本页总结</h2><p>你的静态规格页面已经具备变体联动的结构。真正动态化时，就是把 data-* 模拟数据替换为 WooCommerce variation data。</p></section></main><script src="js/main.js"></script></body></html>

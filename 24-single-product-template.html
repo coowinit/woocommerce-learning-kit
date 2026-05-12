@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>24 产品详情动态化：从静态详情页到 Single Product</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page"><section class="hero"><div class="hero-card"><h1>24 产品详情动态化：从静态详情页到 Single Product</h1><p>更详细地整理品牌产品详情页如何接入标题、价格、SKU、短描述、主图、图集和购买按钮。</p></div><img src="assets/page-24.svg" alt="24 产品详情动态化：从静态详情页到 Single Product"></section><nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+      <a href="21-dynamic-roadmap.html">21 动态化路线</a>
+      <a href="22-product-card-loop.html">22 产品卡片动态化</a>
+      <a href="23-shop-archive-template.html">23 商店列表动态化</a>
+      <a href="24-single-product-template.html">24 产品详情动态化</a>
+      <a href="25-variation-data.html">25 变体数据动态化</a>
+      <a href="26-cart-checkout-account.html">26 购物车结账账户</a>
+    </nav><section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>产品详情</span><span>Single Product</span><span>图集</span><span>价格</span><span>Add to Cart</span></div></section>
+<section class="demo"><h2>产品详情动态化：建议分 4 次做</h2><div class="sequence-list"><div class="sequence-item"><div><strong>先接基础信息</strong><span>标题、价格、SKU、短描述。这个阶段最容易验证数据是否正确。</span></div></div><div class="sequence-item"><div><strong>再接产品图片</strong><span>主图、产品图集、缩略图。Swiper 可以继续使用，只是 slide 改为动态循环。</span></div></div><div class="sequence-item"><div><strong>再接购买区域</strong><span>数量、Add to Cart、库存状态、简单产品 / 可变产品不同表现。</span></div></div><div class="sequence-item"><div><strong>最后接扩展内容</strong><span>详情 Tab、相关产品、Upsell、Cross-sell、技术参数、下载资料。</span></div></div></div></section>
+<section class="demo"><h2>单产品页面常见动态字段</h2><div class="mapping-table-wrap"><table class="mapping-table"><thead><tr><th>页面区域</th><th>动态数据 / 函数</th><th>备注</th></tr></thead><tbody><tr><td>标题</td><td><code>the_title()</code></td><td>当前产品标题</td></tr><tr><td>价格</td><td><code>$product-&gt;get_price_html()</code></td><td>保留 WooCommerce 原始价格 HTML 更安全</td></tr><tr><td>SKU</td><td><code>$product-&gt;get_sku()</code></td><td>空 SKU 时要隐藏这一行</td></tr><tr><td>短描述</td><td><code>woocommerce_template_single_excerpt()</code></td><td>后台产品短描述字段</td></tr><tr><td>主图</td><td><code>get_the_post_thumbnail()</code></td><td>可放入 Swiper 第一个 slide</td></tr><tr><td>图集</td><td><code>$product-&gt;get_gallery_image_ids()</code></td><td>循环输出 Swiper 其他 slide</td></tr><tr><td>购买按钮</td><td><code>woocommerce_template_single_add_to_cart()</code></td><td>简单产品和可变产品会自动不同</td></tr></tbody></table></div></section>
+<section class="demo"><h2>Swiper 图集动态化思路</h2><div class="code">&lt;div class="swiper-wrapper"&gt;
+  &lt;div class="swiper-slide"&gt;
+    &lt;?php echo get_the_post_thumbnail( $product-&gt;get_id(), 'large' ); ?&gt;
+  &lt;/div&gt;
+
+  &lt;?php foreach ( $product-&gt;get_gallery_image_ids() as $image_id ) : ?&gt;
+    &lt;div class="swiper-slide"&gt;
+      &lt;?php echo wp_get_attachment_image( $image_id, 'large' ); ?&gt;
+    &lt;/div&gt;
+  &lt;?php endforeach; ?&gt;
+&lt;/div&gt;</div></section>
+<section class="demo"><h2>产品详情页不要急着改的部分</h2><ul class="checklist"><li>可变产品表单先保留 WooCommerce 默认输出</li><li>库存、税费、价格区间不要先手写死</li><li>评论和评分可以后期再接</li><li>相关产品可以先用默认 related products，后期再美化</li></ul></section><section class="summary"><h2>本页总结</h2><p>产品详情页建议分阶段动态化：基础信息、产品图集、购买区域、扩展内容。这样更容易定位问题。</p></section></main><script src="js/main.js"></script></body></html>

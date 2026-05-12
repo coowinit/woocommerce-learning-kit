@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>22 产品卡片动态化：从静态卡片到 Product Loop</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page"><section class="hero"><div class="hero-card"><h1>22 产品卡片动态化：从静态卡片到 Product Loop</h1><p>更详细地整理产品卡片动态化时，图片、标题、价格、按钮、促销标记分别如何接入 WooCommerce 数据。</p></div><img src="assets/page-22.svg" alt="22 产品卡片动态化：从静态卡片到 Product Loop"></section><nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+      <a href="21-dynamic-roadmap.html">21 动态化路线</a>
+      <a href="22-product-card-loop.html">22 产品卡片动态化</a>
+      <a href="23-shop-archive-template.html">23 商店列表动态化</a>
+      <a href="24-single-product-template.html">24 产品详情动态化</a>
+      <a href="25-variation-data.html">25 变体数据动态化</a>
+      <a href="26-cart-checkout-account.html">26 购物车结账账户</a>
+    </nav><section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>产品卡片</span><span>Product Loop</span><span>价格</span><span>按钮</span><span>促销标记</span></div></section>
+<section class="demo"><h2>产品卡片动态化：先替换 6 个核心字段</h2><div class="dynamic-step-grid"><div class="dynamic-step-card"><strong>产品图片</strong><span>静态 img 替换为产品缩略图。</span></div><div class="dynamic-step-card"><strong>产品标题</strong><span>静态标题替换为当前产品标题。</span></div><div class="dynamic-step-card"><strong>产品价格</strong><span>静态价格替换为 WooCommerce 价格 HTML。</span></div><div class="dynamic-step-card"><strong>产品链接</strong><span>View Product 按钮链接到产品详情页。</span></div><div class="dynamic-step-card"><strong>加入购物车</strong><span>简单产品显示 Add to Cart，可变产品显示 Select Options。</span></div><div class="dynamic-step-card"><strong>促销标记</strong><span>Sale / New / Featured 可以根据产品状态判断。</span></div></div></section>
+<section class="demo"><h2>静态卡片和动态卡片对比</h2><div class="dynamic-two-col"><div class="dynamic-mini-card"><h3>静态卡片</h3><div class="code">&lt;article class="product-card"&gt;
+  &lt;img src="assets/product-01.svg"&gt;
+  &lt;h3&gt;Product 01&lt;/h3&gt;
+  &lt;p class="price"&gt;$39.00&lt;/p&gt;
+  &lt;a class="button"&gt;View Product&lt;/a&gt;
+&lt;/article&gt;</div></div><div class="dynamic-mini-card"><h3>动态卡片</h3><div class="code">&lt;article &lt;?php wc_product_class( 'product-card', $product ); ?&gt;&gt;
+  &lt;a href="&lt;?php the_permalink(); ?&gt;"&gt;
+    &lt;?php woocommerce_template_loop_product_thumbnail(); ?&gt;
+  &lt;/a&gt;
+  &lt;h3&gt;&lt;?php the_title(); ?&gt;&lt;/h3&gt;
+  &lt;div class="price"&gt;
+    &lt;?php woocommerce_template_loop_price(); ?&gt;
+  &lt;/div&gt;
+  &lt;?php woocommerce_template_loop_add_to_cart(); ?&gt;
+&lt;/article&gt;</div></div></div></section>
+<section class="demo"><h2>产品卡片接入时要注意</h2><div class="sequence-list"><div class="sequence-item"><div><strong>尽量保留原来的 class</strong><span>比如 product-card、price、button，这样 CSS 不需要大改。</span></div></div><div class="sequence-item"><div><strong>不要直接写死价格格式</strong><span>WooCommerce 价格可能包含促销价、区间价、税费显示、货币符号。</span></div></div><div class="sequence-item"><div><strong>按钮文字会随产品类型变化</strong><span>简单产品、可变产品、缺货产品的按钮可能不同。</span></div></div><div class="sequence-item"><div><strong>图片比例由 CSS 控制</strong><span>动态接入后，不同产品图片尺寸可能不同，需要统一 object-fit 和容器比例。</span></div></div></div></section><section class="dynamic-warning-card">不建议一开始就完全重写 WooCommerce loop 逻辑。先替换产品卡片里的数据，再慢慢做 Sale badge、Featured badge、评分等增强功能。</section><section class="summary"><h2>本页总结</h2><p>产品卡片是动态化的最小单位。先让一个卡片能读取真实产品数据，再扩展到产品列表，会比直接改整页更稳。</p></section></main><script src="js/main.js"></script></body></html>

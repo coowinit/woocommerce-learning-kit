@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>23 商店列表动态化：从产品 Grid 到 Archive Template</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page"><section class="hero"><div class="hero-card"><h1>23 商店列表动态化：从产品 Grid 到 Archive Template</h1><p>更详细地整理商店页、分类页、工具栏、排序、分页和筛选侧栏如何接入 WooCommerce。</p></div><img src="assets/page-23.svg" alt="23 商店列表动态化：从产品 Grid 到 Archive Template"></section><nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+      <a href="21-dynamic-roadmap.html">21 动态化路线</a>
+      <a href="22-product-card-loop.html">22 产品卡片动态化</a>
+      <a href="23-shop-archive-template.html">23 商店列表动态化</a>
+      <a href="24-single-product-template.html">24 产品详情动态化</a>
+      <a href="25-variation-data.html">25 变体数据动态化</a>
+      <a href="26-cart-checkout-account.html">26 购物车结账账户</a>
+    </nav><section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>商店页</span><span>分类页</span><span>排序</span><span>分页</span><span>筛选</span></div></section>
+<section class="demo"><h2>商店列表动态化：你要理解的 6 个区域</h2><div class="dynamic-step-grid"><div class="dynamic-step-card"><strong>页面标题</strong><span>Shop、分类名、搜索结果标题。</span></div><div class="dynamic-step-card"><strong>结果数量</strong><span>Showing 1–12 of 40 products。</span></div><div class="dynamic-step-card"><strong>排序</strong><span>默认排序、价格排序、最新排序。</span></div><div class="dynamic-step-card"><strong>产品循环</strong><span>输出产品卡片。</span></div><div class="dynamic-step-card"><strong>分页</strong><span>多页产品列表导航。</span></div><div class="dynamic-step-card"><strong>筛选侧栏</strong><span>分类、属性、价格、库存状态。</span></div></div></section>
+<section class="demo"><h2>模板文件关系</h2><div class="file-tree">your-theme/
+└── woocommerce/
+    ├── archive-product.php       # 商店页 / 分类页外层
+    ├── content-product.php       # 单个产品卡片
+    └── loop/
+        ├── orderby.php           # 排序下拉
+        ├── result-count.php      # 结果数量
+        └── pagination.php        # 分页</div></section>
+<section class="demo"><h2>产品列表核心结构</h2><div class="code">&lt;div class="toolbar"&gt;
+  &lt;?php woocommerce_result_count(); ?&gt;
+  &lt;?php woocommerce_catalog_ordering(); ?&gt;
+&lt;/div&gt;
+
+&lt;div class="grid"&gt;
+  &lt;?php if ( woocommerce_product_loop() ) : ?&gt;
+    &lt;?php while ( have_posts() ) : ?&gt;
+      &lt;?php the_post(); ?&gt;
+      &lt;?php wc_get_template_part( 'content', 'product' ); ?&gt;
+    &lt;?php endwhile; ?&gt;
+  &lt;?php endif; ?&gt;
+&lt;/div&gt;
+
+&lt;?php woocommerce_pagination(); ?&gt;</div></section>
+<section class="demo"><h2>分类侧栏如何动态化</h2><div class="mapping-table-wrap"><table class="mapping-table"><thead><tr><th>静态筛选项</th><th>动态来源</th><th>说明</th></tr></thead><tbody><tr><td>Decking / Cladding / Fencing</td><td>产品分类 <code>product_cat</code></td><td>可显示分类名称和产品数量</td></tr><tr><td>颜色 / 长度 / 材质</td><td>产品属性 <code>pa_color</code> 等</td><td>适合做筛选或变体选择</td></tr><tr><td>价格范围</td><td>价格筛选 Widget / 插件</td><td>真实价格筛选通常不建议手写复杂逻辑</td></tr><tr><td>In stock</td><td>库存状态</td><td>可结合库存筛选插件或自定义查询</td></tr></tbody></table></div></section><section class="dynamic-note-card">商店列表页建议先让 WooCommerce 默认 loop 跑起来，再把外层布局改成你的 Grid、Toolbar、Sidebar 样式。</section><section class="summary"><h2>本页总结</h2><p>商店列表页的核心是产品循环。你的静态 Grid、Toolbar、Sidebar 都可以保留，只需要逐步把数据来源替换为 WooCommerce。</p></section></main><script src="js/main.js"></script></body></html>

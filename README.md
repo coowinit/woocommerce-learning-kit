@@ -342,3 +342,79 @@ data-sku         → variation sku
 data-description → variation description
 stock pill       → variation availability
 ```
+
+
+## v1.3 新增：静态页面动态化学习章节
+
+本版本新增 `21-26` 六个页面，重点讲解这套静态 HTML 页面如何一步步变成真正的 WooCommerce 动态页面。
+
+### 新增页面
+
+| 页面 | 主题 | 重点 |
+|---|---|---|
+| `21-dynamic-roadmap.html` | 动态化路线 | 从静态 HTML 到 WooCommerce 模板的整体路线 |
+| `22-product-card-loop.html` | 产品卡片动态化 | 把静态产品卡片替换为 Product Loop |
+| `23-shop-archive-template.html` | 商店列表动态化 | 把产品 Grid 变成 Shop / Category Archive |
+| `24-single-product-template.html` | 产品详情动态化 | 接入产品标题、价格、SKU、描述和 Add to Cart |
+| `25-variation-data.html` | 变体数据动态化 | 把 `data-*` 模拟数据替换为 variation data |
+| `26-cart-checkout-account.html` | 购物车结账账户 | 先保留默认流程，再做样式和局部模板优化 |
+
+### 推荐学习顺序
+
+```text
+静态页面结构
+↓
+产品卡片
+↓
+产品列表
+↓
+品牌产品详情页
+↓
+规格变体交互
+↓
+动态化路线
+↓
+Product Loop
+↓
+Archive Product
+↓
+Single Product
+↓
+Variation Data
+↓
+Cart / Checkout / My Account
+```
+
+### 学习重点
+
+这部分内容不追求复杂代码，而是帮助理解：
+
+- 哪些 HTML 可以保留
+- 哪些静态内容需要替换成 WooCommerce 数据
+- 产品卡片如何变成 Product Loop
+- 产品列表如何变成 Archive Template
+- 产品详情页如何变成 Single Product Template
+- 规格选项如何接入 Variation Data
+- 为什么购物车、结账和账户页不建议一开始完全重写
+
+
+## v1.3.1 更新：修复 21 页面布局，并扩展动态化章节
+
+本次更新重点修复 `21-dynamic-roadmap.html` 中步骤布局错位的问题，并对 `22-26` 页面进行了内容扩展，让动态接入 WooCommerce 的学习路线更完整。
+
+### 修复内容
+
+- 修复 `21-dynamic-roadmap.html` 中箭头和步骤卡片错位的问题
+- 将 21 页改成更稳定的路线图卡片 + 时间线布局
+- 优化手机端显示，避免步骤内容挤压或错位
+
+### 扩展内容
+
+| 页面 | 新增重点 |
+|---|---|
+| `21-dynamic-roadmap.html` | 增加五阶段动态化路线、模板对应表、学习优先级 |
+| `22-product-card-loop.html` | 增加产品图片、标题、价格、按钮、促销标记的动态替换说明 |
+| `23-shop-archive-template.html` | 增加商店页工具栏、排序、分页、筛选侧栏和模板文件关系 |
+| `24-single-product-template.html` | 增加产品详情页分阶段接入顺序、图集动态化思路 |
+| `25-variation-data.html` | 增加可变产品后台数据、前台交互和 variation data 对应关系 |
+| `26-cart-checkout-account.html` | 增加购物车、结账、账户页哪些先保留默认流程，哪些适合先改样式 |

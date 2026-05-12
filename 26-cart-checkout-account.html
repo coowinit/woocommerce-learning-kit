@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>26 购物车、结账和账户页：先稳定流程，再优化外观</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page"><section class="hero"><div class="hero-card"><h1>26 购物车、结账和账户页：先稳定流程，再优化外观</h1><p>更详细地说明购物车、结账和账户页如何接入 WooCommerce，哪些能先改样式，哪些不建议过早重写。</p></div><img src="assets/page-26.svg" alt="26 购物车、结账和账户页：先稳定流程，再优化外观"></section><nav class="nav">
+      <a href="index.html">首页</a>
+      <a href="01-page-structure.html">01 页面结构</a>
+      <a href="02-header-navigation.html">02 头部导航</a>
+      <a href="03-hero-banner.html">03 首页 Banner</a>
+      <a href="04-product-card.html">04 产品卡片</a>
+      <a href="05-product-grid.html">05 产品列表</a>
+      <a href="06-responsive-grid.html">06 响应式列表</a>
+      <a href="07-category-sidebar.html">07 分类侧栏</a>
+      <a href="08-toolbar-filter.html">08 搜索筛选</a>
+      <a href="09-card-details.html">09 卡片细节</a>
+      <a href="10-list-view.html">10 列表视图</a>
+      <a href="11-pagination.html">11 分页</a>
+      <a href="12-product-detail.html">12 产品详情</a>
+      <a href="13-product-gallery.html">13 产品图集</a>
+      <a href="14-variation-selector.html">14 规格选择</a>
+      <a href="15-product-tabs.html">15 详情 Tab</a>
+      <a href="16-related-products.html">16 相关产品</a>
+      <a href="17-cart-page.html">17 购物车</a>
+      <a href="18-checkout-page.html">18 结账页</a>
+      <a href="19-account-orders.html">19 账户订单</a>
+      <a href="20-complete-store-page.html">20 完整页面</a>
+      <a href="21-dynamic-roadmap.html">21 动态化路线</a>
+      <a href="22-product-card-loop.html">22 产品卡片动态化</a>
+      <a href="23-shop-archive-template.html">23 商店列表动态化</a>
+      <a href="24-single-product-template.html">24 产品详情动态化</a>
+      <a href="25-variation-data.html">25 变体数据动态化</a>
+      <a href="26-cart-checkout-account.html">26 购物车结账账户</a>
+    </nav><section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>购物车</span><span>结账</span><span>账户页</span><span>订单流程</span><span>稳定性</span></div></section>
+<section class="demo"><h2>购物车、结账、账户页为什么要谨慎</h2><div class="dynamic-step-grid"><div class="dynamic-step-card"><strong>购物车</strong><span>涉及数量更新、小计、优惠券、运费、库存校验。</span></div><div class="dynamic-step-card"><strong>结账</strong><span>涉及账单地址、配送方式、支付方式、订单创建。</span></div><div class="dynamic-step-card"><strong>我的账户</strong><span>涉及登录状态、订单、地址、下载、客户隐私。</span></div></div></section>
+<section class="demo"><h2>建议：先默认流程，再视觉优化</h2><div class="mapping-table-wrap"><table class="mapping-table"><thead><tr><th>页面</th><th>优先保留</th><th>可以先优化</th><th>后期再改</th></tr></thead><tbody><tr><td>Cart</td><td>数量更新、优惠券、小计、运费计算</td><td>表格样式、按钮、空购物车提示</td><td>完全自定义购物车逻辑</td></tr><tr><td>Checkout</td><td>字段验证、支付、订单创建</td><td>字段间距、标题、订单摘要样式</td><td>重写支付和下单流程</td></tr><tr><td>My Account</td><td>登录、订单、地址、下载 endpoints</td><td>菜单样式、订单表格、状态 badge</td><td>重写账户权限和订单查询</td></tr></tbody></table></div></section>
+<section class="demo"><h2>你的静态页面如何继续发挥作用</h2><div class="dynamic-two-col"><div class="dynamic-mini-card"><h3>作为视觉参考</h3><p>保留你现在的卡片、按钮、表格、状态标签、账户菜单设计，用 CSS 去覆盖默认 WooCommerce 输出。</p><ul><li><code>17-cart-page.html</code>：购物车视觉参考</li><li><code>18-checkout-page.html</code>：结账布局参考</li><li><code>19-account-orders.html</code>：账户中心参考</li></ul></div><div class="dynamic-mini-card"><h3>作为模板拆分参考</h3><p>当你熟悉默认流程后，再考虑局部覆盖模板，而不是一次重写整个页面。</p><ul><li>先改 CSS</li><li>再改局部模板</li><li>最后才考虑自定义逻辑</li></ul></div></div></section>
+<section class="demo"><h2>上线前必须测试的流程</h2><ul class="checklist"><li>加入购物车是否成功</li><li>购物车数量更新是否正确</li><li>优惠券是否能正常应用和移除</li><li>运费是否能根据地址变化</li><li>结账字段验证是否正常</li><li>支付成功和失败是否都有正确反馈</li><li>订单邮件是否收到</li><li>账户订单页是否能查看订单</li><li>手机端结账是否顺畅</li></ul></section><section class="dynamic-note-card">电商页面最重要的是稳定和可完成交易。视觉优化可以逐步做，但购物车、结账、支付、订单邮件必须始终优先保证稳定。</section><section class="summary"><h2>本页总结</h2><p>购物车、结账和账户页优先保证流程稳定。你的静态页面可以作为视觉参考，但真实交易逻辑建议先保留 WooCommerce 默认流程。</p></section></main><script src="js/main.js"></script></body></html>
