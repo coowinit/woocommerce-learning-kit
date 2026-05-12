@@ -1,148 +1,46 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WooCommerce Learning Kit - Code Study Edition</title>
-  <link rel="stylesheet" href="css/common.css">
-</head>
-<body>
-  <main class="page">
-    <section class="hero">
-      <div class="hero-card">
-        <h1>WooCommerce Learning Kit - Code Study Edition</h1>
-        <p>面向深入学习的 WooCommerce 代码研究包：20 个主题页面，122+ 个代码场景，覆盖产品、购物车、结账、订单、邮件、配送、支付、优惠券、REST API、HPOS、性能和调试。</p>
-      </div>
-      <img src="assets/01-extension-foundation.svg" alt="WooCommerce Code Study Edition">
-    </section>
-
-    <nav class="nav">
-      <a href="index.html">首页</a>
-      <a href="01-extension-foundation.html">01</a>
-      <a href="02-hooks-conditions.html">02</a>
-      <a href="03-product-crud.html">03</a>
-      <a href="04-variable-products-attributes.html">04</a>
-      <a href="05-product-fields-tabs.html">05</a>
-      <a href="06-pricing-discounts-fees.html">06</a>
-      <a href="07-cart-session-notices.html">07</a>
-      <a href="08-checkout-fields-validation.html">08</a>
-      <a href="09-orders-hpos-crud.html">09</a>
-      <a href="10-order-items-refunds.html">10</a>
-      <a href="11-emails-notifications.html">11</a>
-      <a href="12-shipping-methods-zones.html">12</a>
-      <a href="13-payment-gateway.html">13</a>
-      <a href="14-coupons-promotions.html">14</a>
-      <a href="15-customers-account-endpoints.html">15</a>
-      <a href="16-stock-inventory.html">16</a>
-      <a href="17-rest-api-webhooks.html">17</a>
-      <a href="18-blocks-store-api.html">18</a>
-      <a href="19-admin-reports-analytics.html">19</a>
-      <a href="20-performance-security-debug.html">20</a>
-    </nav>
-
-    <section class="card">
-      <h2>学习说明</h2>
-      <p>这个版本重点偏向 WooCommerce 功能和代码研究，不再停留在后台基础操作。每个页面围绕真实二次开发场景整理多个代码片段，并同步生成 snippets 文件，方便后期复制、拆分和深入研究。</p>
-      <p>建议优先用本地测试站或 staging 环境验证代码，尤其是支付、订单、库存、优惠券和邮件相关代码。</p>
-      <div class="path">
-        <span>122+ code snippets</span>
-        <span>products</span>
-        <span>cart</span>
-        <span>checkout</span>
-        <span>orders</span>
-        <span>payments</span>
-        <span>shipping</span>
-        <span>HPOS</span>
-        <span>REST API</span>
-      </div>
-    </section>
-
-    <section class="warning">
-      <strong>重要提醒：</strong>本学习包中的代码用于学习和研究。不要把支付密钥、API Key、SMTP 密码、真实客户数据或 wp-config.php 中的敏感信息上传到公开仓库。
-    </section>
-
-    <section class="lesson-grid">
-      <a class="lesson-card" href="01-extension-foundation.html">
-        <strong>01 扩展插件基础与安全入口</strong>
-        <span>从 WooCommerce 扩展插件结构开始，整理依赖检查、HPOS 声明、常量、加载顺序和初始化。</span>
-      </a>
-      <a class="lesson-card" href="02-hooks-conditions.html">
-        <strong>02 WooCommerce Hooks 与条件判断</strong>
-        <span>整理商店页、产品页、购物车、结账、账户页常用 hooks 和条件标签。</span>
-      </a>
-      <a class="lesson-card" href="03-product-crud.html">
-        <strong>03 产品 CRUD 与查询</strong>
-        <span>整理 wc_get_product、WC_Product_Simple、WC_Product_Variable、产品查询和批量更新场景。</span>
-      </a>
-      <a class="lesson-card" href="04-variable-products-attributes.html">
-        <strong>04 可变产品、属性与变体</strong>
-        <span>整理产品属性、全局属性、变体创建、变体价格库存和前台输出。</span>
-      </a>
-      <a class="lesson-card" href="05-product-fields-tabs.html">
-        <strong>05 产品后台字段与前台展示</strong>
-        <span>整理产品编辑页自定义字段、保存字段、产品数据 Tab、前台展示和后台列。</span>
-      </a>
-      <a class="lesson-card" href="06-pricing-discounts-fees.html">
-        <strong>06 价格、折扣与费用</strong>
-        <span>整理价格显示、动态价格、购物车费用、条件折扣、价格 HTML 和税费相关注意点。</span>
-      </a>
-      <a class="lesson-card" href="07-cart-session-notices.html">
-        <strong>07 购物车、Session 与提示</strong>
-        <span>整理加入购物车、购物车 item data、session、notices、fragments 和购物车验证。</span>
-      </a>
-      <a class="lesson-card" href="08-checkout-fields-validation.html">
-        <strong>08 结账字段、验证与订单 Meta</strong>
-        <span>整理经典结账字段修改、自定义字段、验证、保存订单、后台显示和 Blocks 注意事项。</span>
-      </a>
-      <a class="lesson-card" href="09-orders-hpos-crud.html">
-        <strong>09 订单 CRUD 与 HPOS 兼容</strong>
-        <span>整理 wc_get_order、订单状态、订单备注、订单查询、HPOS 兼容和订单 meta。</span>
-      </a>
-      <a class="lesson-card" href="10-order-items-refunds.html">
-        <strong>10 订单商品、退款与发货信息</strong>
-        <span>整理订单 item、item meta、退款创建、发货字段、物流备注和订单总额相关场景。</span>
-      </a>
-      <a class="lesson-card" href="11-emails-notifications.html">
-        <strong>11 邮件通知与模板</strong>
-        <span>整理订单邮件内容、邮件收件人、主题、标题、附件、HTML 邮件和自定义邮件触发。</span>
-      </a>
-      <a class="lesson-card" href="12-shipping-methods-zones.html">
-        <strong>12 配送方式、区域与运费</strong>
-        <span>整理配送包裹、区域、运费规则、自定义配送方式和按条件隐藏配送方式。</span>
-      </a>
-      <a class="lesson-card" href="13-payment-gateway.html">
-        <strong>13 支付网关与回调</strong>
-        <span>整理自定义支付网关骨架、process_payment、订单状态、回调验证和日志。</span>
-      </a>
-      <a class="lesson-card" href="14-coupons-promotions.html">
-        <strong>14 优惠券与促销规则</strong>
-        <span>整理优惠券 CRUD、自动应用优惠券、自定义验证、限制条件和活动提示。</span>
-      </a>
-      <a class="lesson-card" href="15-customers-account-endpoints.html">
-        <strong>15 客户、账户与自定义 Endpoint</strong>
-        <span>整理客户数据、账户菜单、我的账户 endpoint、用户 meta 和订单列表扩展。</span>
-      </a>
-      <a class="lesson-card" href="16-stock-inventory.html">
-        <strong>16 库存、SKU 与低库存提醒</strong>
-        <span>整理库存读取、扣减、恢复、低库存邮件、自定义库存逻辑和后台库存列。</span>
-      </a>
-      <a class="lesson-card" href="17-rest-api-webhooks.html">
-        <strong>17 REST API、Webhooks 与外部系统</strong>
-        <span>整理 WooCommerce REST API 读取、写入、Webhook、签名和外部同步场景。</span>
-      </a>
-      <a class="lesson-card" href="18-blocks-store-api.html">
-        <strong>18 Blocks、Store API 与现代结账</strong>
-        <span>整理经典 hooks 与 Blocks 差异、Store API、Blocks 兼容提示和前端扩展注意点。</span>
-      </a>
-      <a class="lesson-card" href="19-admin-reports-analytics.html">
-        <strong>19 后台订单、报表与管理增强</strong>
-        <span>整理后台订单列、筛选、批量操作、订单搜索、日志和 Analytics 数据扩展思路。</span>
-      </a>
-      <a class="lesson-card" href="20-performance-security-debug.html">
-        <strong>20 性能、安全、迁移与调试</strong>
-        <span>整理 HPOS、缓存、日志、Action Scheduler、CLI、模板覆盖、安全密钥和排查流程。</span>
-      </a>
-    </section>
-  </main>
-</body>
-</html>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WooCommerce HTML Page Learning Kit</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page">
+<section class="hero"><div class="hero-card"><h1>WooCommerce HTML Page Learning Kit</h1><p>从静态 HTML 页面开始，逐步学习 WooCommerce 页面结构、产品卡片、产品列表、分类筛选、产品详情、购物车和结账页面。</p></div><img src="assets/page-20.svg"></section>
+<nav class="nav"><a href="index.html">首页</a>
+<a href="01-page-structure.html">01 页面结构</a>
+<a href="02-header-navigation.html">02 头部导航</a>
+<a href="03-hero-banner.html">03 首页 Banner</a>
+<a href="04-product-card.html">04 产品卡片</a>
+<a href="05-product-grid.html">05 产品列表</a>
+<a href="06-responsive-grid.html">06 响应式列表</a>
+<a href="07-category-sidebar.html">07 分类侧栏</a>
+<a href="08-toolbar-filter.html">08 搜索筛选</a>
+<a href="09-card-details.html">09 卡片细节</a>
+<a href="10-list-view.html">10 列表视图</a>
+<a href="11-pagination.html">11 分页</a>
+<a href="12-product-detail.html">12 产品详情</a>
+<a href="13-product-gallery.html">13 产品图集</a>
+<a href="14-variation-selector.html">14 规格选择</a>
+<a href="15-product-tabs.html">15 详情 Tab</a>
+<a href="16-related-products.html">16 相关产品</a>
+<a href="17-cart-page.html">17 购物车</a>
+<a href="18-checkout-page.html">18 结账页</a>
+<a href="19-account-orders.html">19 账户订单</a>
+<a href="20-complete-store-page.html">20 完整页面</a></nav>
+<section class="card"><h2>学习说明</h2><p>这版不重点讲 PHP、hooks 和复杂二次开发，而是回到页面本身：先学会如何用 HTML + CSS 做出 WooCommerce 常见页面。</p><p>学完后，你会更容易理解 WooCommerce 的产品列表模板、产品详情模板、购物车模板和结账模板。</p><div class="path"><span>页面结构</span><span>产品卡片</span><span>产品列表</span><span>分类筛选</span><span>产品详情</span><span>购物车</span><span>结账页</span></div></section>
+<section class="warning"><strong>学习建议：</strong>先不要急着看 WooCommerce PHP 模板。先把这些静态页面拆开、改样式、改结构。</section>
+<section class="lesson-grid"><a class="lesson-card" href="01-page-structure.html"><strong>01 页面结构</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="02-header-navigation.html"><strong>02 头部导航</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="03-hero-banner.html"><strong>03 首页 Banner</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="04-product-card.html"><strong>04 产品卡片</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="05-product-grid.html"><strong>05 产品列表</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="06-responsive-grid.html"><strong>06 响应式列表</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="07-category-sidebar.html"><strong>07 分类侧栏</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="08-toolbar-filter.html"><strong>08 搜索筛选</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="09-card-details.html"><strong>09 卡片细节</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="10-list-view.html"><strong>10 列表视图</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="11-pagination.html"><strong>11 分页</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="12-product-detail.html"><strong>12 产品详情</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="13-product-gallery.html"><strong>13 产品图集</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="14-variation-selector.html"><strong>14 规格选择</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="15-product-tabs.html"><strong>15 详情 Tab</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="16-related-products.html"><strong>16 相关产品</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="17-cart-page.html"><strong>17 购物车</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="18-checkout-page.html"><strong>18 结账页</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="19-account-orders.html"><strong>19 账户订单</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a>
+<a class="lesson-card" href="20-complete-store-page.html"><strong>20 完整页面</strong><span>一步步学习 WooCommerce 前台页面结构。</span></a></section>
+</main><script src="js/main.js"></script></body></html>

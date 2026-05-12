@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>05 产品列表：Grid 三列产品展示</title><link rel="stylesheet" href="css/common.css"></head><body><main class="page">
+<section class="hero"><div class="hero-card"><h1>05 产品列表：Grid 三列产品展示</h1><p>把多个产品卡片组合成商店页产品列表。</p></div><img src="assets/page-05.svg" alt="05 产品列表：Grid 三列产品展示"></section>
+<nav class="nav"><a href="index.html">首页</a>
+<a href="01-page-structure.html">01 页面结构</a>
+<a href="02-header-navigation.html">02 头部导航</a>
+<a href="03-hero-banner.html">03 首页 Banner</a>
+<a href="04-product-card.html">04 产品卡片</a>
+<a href="05-product-grid.html">05 产品列表</a>
+<a href="06-responsive-grid.html">06 响应式列表</a>
+<a href="07-category-sidebar.html">07 分类侧栏</a>
+<a href="08-toolbar-filter.html">08 搜索筛选</a>
+<a href="09-card-details.html">09 卡片细节</a>
+<a href="10-list-view.html">10 列表视图</a>
+<a href="11-pagination.html">11 分页</a>
+<a href="12-product-detail.html">12 产品详情</a>
+<a href="13-product-gallery.html">13 产品图集</a>
+<a href="14-variation-selector.html">14 规格选择</a>
+<a href="15-product-tabs.html">15 详情 Tab</a>
+<a href="16-related-products.html">16 相关产品</a>
+<a href="17-cart-page.html">17 购物车</a>
+<a href="18-checkout-page.html">18 结账页</a>
+<a href="19-account-orders.html">19 账户订单</a>
+<a href="20-complete-store-page.html">20 完整页面</a></nav>
+<section class="card"><h2>本页学习重点</h2><div class="tag-list"><span>Product Grid</span><span>三列</span><span>产品列表</span></div></section>
+<section class="demo"><h2>三列产品列表</h2><div class="grid"><article class="product-card" data-card data-name="Product 01" data-category="Decking">
+<span class="badge">New</span>
+<img src="assets/product-01.svg" alt="Product 01">
+<div class="product-card-content"><h3>Product 01</h3><div class="rating">★★★★★</div><p>Decking product for outdoor projects.</p><p><span class="price">$34.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+<article class="product-card" data-card data-name="Product 02" data-category="Decking">
+
+<img src="assets/product-02.svg" alt="Product 02">
+<div class="product-card-content"><h3>Product 02</h3><div class="rating">★★★★★</div><p>Decking product for outdoor projects.</p><p><span class="price">$39.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+<article class="product-card" data-card data-name="Product 03" data-category="Cladding">
+
+<img src="assets/product-03.svg" alt="Product 03">
+<div class="product-card-content"><h3>Product 03</h3><div class="rating">★★★★★</div><p>Cladding product for outdoor projects.</p><p><span class="price">$44.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+<article class="product-card" data-card data-name="Product 04" data-category="Cladding">
+
+<img src="assets/product-04.svg" alt="Product 04">
+<div class="product-card-content"><h3>Product 04</h3><div class="rating">★★★★★</div><p>Cladding product for outdoor projects.</p><p><span class="price">$49.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+<article class="product-card" data-card data-name="Product 05" data-category="Fencing">
+
+<img src="assets/product-05.svg" alt="Product 05">
+<div class="product-card-content"><h3>Product 05</h3><div class="rating">★★★★★</div><p>Fencing product for outdoor projects.</p><p><span class="price">$54.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article>
+<article class="product-card" data-card data-name="Product 06" data-category="Fencing">
+
+<img src="assets/product-06.svg" alt="Product 06">
+<div class="product-card-content"><h3>Product 06</h3><div class="rating">★★★★★</div><p>Fencing product for outdoor projects.</p><p><span class="price">$59.00</span></p><a class="button" href="12-product-detail.html">View Product</a></div></article></div><div class="code">.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}</div></section>
+<section class="summary"><h2>本页总结</h2><p>产品列表是 WooCommerce 商店页和分类页的核心结构。</p></section>
+</main><script src="js/main.js"></script></body></html>

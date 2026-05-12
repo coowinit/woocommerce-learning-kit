@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7e22ce"/><stop offset="100%" stop-color="#111827"/></linearGradient></defs>
+<rect width="1200" height="760" fill="url(#g)"/><rect x="90" y="90" width="1020" height="580" rx="42" fill="#fff" opacity=".1"/>
+<circle cx="220" cy="190" r="90" fill="#fff" opacity=".12"/><circle cx="980" cy="590" r="120" fill="#fff" opacity=".1"/>
+<text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="54" font-weight="700" fill="#fff">Product 03</text>
+<text x="50%" y="62%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="28" fill="#f3e8ff">WooCommerce Product</text>
+</svg>
